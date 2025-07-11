@@ -1,6 +1,7 @@
 name: Terraform Deploy GCP
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - 'terraform/**'
