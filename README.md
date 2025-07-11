@@ -6,16 +6,7 @@ Este proyecto define y despliega infraestructura en Google Cloud Platform (GCP) 
 
 ## 📁 Estructura del Proyecto
 
-```text
-├── terraform/
-│   ├── main.tf              # Recursos e infraestructura
-│   ├── variables.tf         # Variables definidas
-│   ├── terraform.tfvars     # Valores de variables (generado en GitHub Actions)
-├── .github/
-│   └── workflows/
-│       ├── deploy.yml       # Workflow para terraform apply
-│       └── destroy.yml      # Workflow para terraform destroy (opcional)
-└── README.md```
+
 ---
 
 ## 🧩 Prerrequisitos
