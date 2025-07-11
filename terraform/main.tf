@@ -1,4 +1,9 @@
 terraform {
+
+  backend "gcs" {
+    bucket = "backend-terraform25"
+    prefix = "terraform/state"
+  }
   required_providers {
     google = {
       source  = "hashicorp/google"
