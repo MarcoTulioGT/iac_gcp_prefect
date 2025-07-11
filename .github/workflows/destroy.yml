@@ -31,10 +31,19 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
+      - name: Crear terraform.tfvars
+        run: |
+          cat <<EOF > terraform.tfvars
+          project     = "${{ vars.GCP_PROJECT }}"
+          region      = "${{ vars.GCP_REGION }}"
+          zone        = "${{ vars.GCP_ZONE }}"
+          EOF
+
       - name: Terraform Init
         run: terraform init
 
       - name: Terraform Destroy
         run: terraform destroy -auto-approve
         env:
-          TF_VAR_project: ${{ vars.GCP_PROJECT }}   # si usas variables dinámicas
+          TF_LOG: DEBUG
+   # si usas variables dinámicas
