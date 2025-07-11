@@ -16,7 +16,7 @@ Este proyecto define y despliega infraestructura en Google Cloud Platform (GCP) 
 │       ├── deploy.yml       # Workflow para terraform apply
 │       └── destroy.yml      # Workflow para terraform destroy (opcional)
 └── README.md
-
+```
 ---
 
 ## 🧩 Prerrequisitos
