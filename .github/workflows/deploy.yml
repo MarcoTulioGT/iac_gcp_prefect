@@ -57,10 +57,16 @@ jobs:
 
     - name: Terraform Format
       run: terraform fmt -check
+      env:
+        TF_LOG: DEBUG
 
     - name: Terraform Plan
       run: terraform plan
+      env:
+        TF_LOG: DEBUG
 
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main'
       run: terraform apply -auto-approve
+      env:
+        TF_LOG: DEBUG
