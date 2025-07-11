@@ -47,11 +47,14 @@ jobs:
         credentials_json: ${{ secrets.GCP_CREDENTIALS }}
         export_environment_variables: true
 
-    - name: Set environment variables
+    - name: Crear terraform.tfvars
       run: |
-        echo "project=${{ vars.GCP_PROJECT }}" >> $GITHUB_ENV
-        echo "region=${{ vars.GCP_REGION }}" >> $GITHUB_ENV
-        echo "zone=${{ vars.GCP_ZONE }}" >> $GITHUB_ENV
+        cat <<EOF > terraform.tfvars
+        project     = "${{ vars.GCP_PROJECT }}"
+        region      = "${{ vars.GCP_REGION }}"
+        zone      = "${{ vars.GCP_ZONE }}"
+        environment = "${{ vars.ENVIRONMENT }}"
+        EOF
 
     - name: Terraform Init
       run: terraform init
