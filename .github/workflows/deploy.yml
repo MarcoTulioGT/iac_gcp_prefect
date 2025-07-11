@@ -2,11 +2,6 @@ name: Terraform Deploy GCP
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'terraform/**'
-    branches:
-      - main
 
 permissions:
   contents: read
