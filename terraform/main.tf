@@ -8,9 +8,9 @@ terraform {
 }
 
 provider "google" {
- project = var.project
- region  = var.region
- zone    = var.zone
+  project = var.project
+  region  = var.region
+  zone    = var.zone
 }
 
 resource "google_compute_firewall" "allow_prefect_ports" {
@@ -19,7 +19,7 @@ resource "google_compute_firewall" "allow_prefect_ports" {
 
   allow {
     protocol = "tcp"
-    ports    = ["22", "8080", "3000", "4200","5432"]
+    ports    = ["22", "8080", "3000", "4200", "5432"]
   }
 
   source_ranges = ["0.0.0.0/0"]
@@ -38,10 +38,10 @@ resource "google_compute_instance" "postgresql_instance" {
     }
   }
 
-   scheduling {
-    provisioning_model = "SPOT"         # ✅ Recomendado (nuevo)
-    preemptible        = true           # 👈 Requerido para compatibilidad
-    automatic_restart  = false          # 👈 Spot VMs no deben reiniciarse
+  scheduling {
+    provisioning_model = "SPOT" # ✅ Recomendado (nuevo)
+    preemptible        = true   # 👈 Requerido para compatibilidad
+    automatic_restart  = false  # 👈 Spot VMs no deben reiniciarse
   }
 
   network_interface {
@@ -49,23 +49,23 @@ resource "google_compute_instance" "postgresql_instance" {
     access_config {}
   }
 
-#    attached_disk {
-#    #source      = google_compute_disk.data_disk.self_link
-#    source      = "projects/${var.project}/zones/${var.zone}/disks/storage-postgresql-disk"
-#    device_name = "data-disk"
-#    mode        = "READ_WRITE"
-#  }
+  #    attached_disk {
+  #    #source      = google_compute_disk.data_disk.self_link
+  #    source      = "projects/${var.project}/zones/${var.zone}/disks/storage-postgresql-disk"
+  #    device_name = "data-disk"
+  #    mode        = "READ_WRITE"
+  #  }
 
-#  metadata = {
-#    ssh-keys = "debian:${file("${path.module}/id_rsa.pub")}"
-#  }
+  #  metadata = {
+  #    ssh-keys = "debian:${file("${path.module}/id_rsa.pub")}"
+  #  }
 
-#}
+  #}
 
-#resource "local_file" "ansible_inventory" {
-#  content  = <<-EOT
-#    [postgresql]
-#    vm-postgresql ansible_host=${google_compute_instance.postgresql_instance.network_interface[0].access_config[0].nat_ip} ansible_user=debian ansible_ssh_private_key_file=~/.ssh/id_rsa
-#  EOT
-#  filename = "${var.path_ansible}/inventory.ini"
+  #resource "local_file" "ansible_inventory" {
+  #  content  = <<-EOT
+  #    [postgresql]
+  #    vm-postgresql ansible_host=${google_compute_instance.postgresql_instance.network_interface[0].access_config[0].nat_ip} ansible_user=debian ansible_ssh_private_key_file=~/.ssh/id_rsa
+  #  EOT
+  #  filename = "${var.path_ansible}/inventory.ini"
 }
