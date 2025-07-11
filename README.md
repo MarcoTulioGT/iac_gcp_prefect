@@ -15,8 +15,7 @@ Este proyecto define y despliega infraestructura en Google Cloud Platform (GCP) 
 │   └── workflows/
 │       ├── deploy.yml       # Workflow para terraform apply
 │       └── destroy.yml      # Workflow para terraform destroy (opcional)
-└── README.md
-
+└── README.md```
 ---
 
 ## 🧩 Prerrequisitos
@@ -58,21 +57,21 @@ Este proyecto define y despliega infraestructura en Google Cloud Platform (GCP) 
 
 ```bash
 gcloud auth application-default login
-export GOOGLE_APPLICATION_CREDENTIALS=/ruta/credenciales.json
+export GOOGLE_APPLICATION_CREDENTIALS=/ruta/credenciales.json```
 
 2. Inicializar Terraform:
 ```bash
 cd terraform
-terraform init
+terraform init```
 
 
 3. Aplicar cambios:
 ```bash
-terraform apply -var="project=YOUR_PROJECT" -var="region=us-central1" -var="zone=us-central1-a" -auto-approve
+terraform apply -var="project=YOUR_PROJECT" -var="region=us-central1" -var="zone=us-central1-a" -auto-approve```
 
 4. Destruir infraestructura (opcional):
 ```bash
-terraform destroy -auto-approve
+terraform destroy -auto-approve```
 
 🤖 CI/CD con GitHub Actions
 Desplegar (apply)
