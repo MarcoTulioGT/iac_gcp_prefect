@@ -17,6 +17,8 @@ Este proyecto define y despliega infraestructura en Google Cloud Platform (GCP) 
 │       └── destroy.yml      # Workflow para terraform destroy (opcional)
 └── README.md
 
+---
+
 ## 🧩 Prerrequisitos
 
 - Cuenta en [Google Cloud](https://console.cloud.google.com/)
