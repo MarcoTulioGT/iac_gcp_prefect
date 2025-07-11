@@ -52,8 +52,7 @@ jobs:
         cat <<EOF > terraform.tfvars
         project     = "${{ vars.GCP_PROJECT }}"
         region      = "${{ vars.GCP_REGION }}"
-        zone      = "${{ vars.GCP_ZONE }}"
-        environment = "${{ vars.ENVIRONMENT }}"
+        zone        = "${{ vars.GCP_ZONE }}"
         EOF
 
     - name: Terraform Init
