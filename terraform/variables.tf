@@ -4,10 +4,10 @@ variable "project" {
 }
 
 variable "region" {
-  type    = string
+  type = string
 }
 
 variable "zone" {
-  type    = string
+  type = string
 }
 
