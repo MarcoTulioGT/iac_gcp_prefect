@@ -49,8 +49,9 @@ jobs:
 
     - name: Set environment variables
       run: |
-        echo "TF_VAR_project=${{ vars.GCP_PROJECT }}" >> $GITHUB_ENV
-        echo "TF_VAR_region=${{ vars.GCP_REGION }}" >> $GITHUB_ENV
+        echo "project=${{ vars.GCP_PROJECT }}" >> $GITHUB_ENV
+        echo "region=${{ vars.GCP_REGION }}" >> $GITHUB_ENV
+        echo "zone=${{ vars.GCP_ZONE }}" >> $GITHUB_ENV
 
     - name: Terraform Init
       run: terraform init
