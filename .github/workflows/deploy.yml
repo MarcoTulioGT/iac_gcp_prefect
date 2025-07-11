@@ -59,7 +59,7 @@ jobs:
       run: terraform init
 
     - name: Terraform Format
-      run: terraform fmt -check
+      run: terraform fmt -check -diff -recursive $(find . -type f -name "*.tf")
       env:
         TF_LOG: DEBUG
 
