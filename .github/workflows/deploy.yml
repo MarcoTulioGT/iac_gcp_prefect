@@ -32,6 +32,15 @@ jobs:
       with:
         terraform_version: 1.6.6
 
+    - name: Verify secret is available
+      run: |
+        if [ -z "${{ secrets.GCP_CREDENTIALS }}" ]; then
+          echo "Secret missing!"
+          exit 1
+        else
+          echo "Secret available"
+        fi
+
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v2
       with:
