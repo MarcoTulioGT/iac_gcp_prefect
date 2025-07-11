@@ -1,0 +1,40 @@
+name: Terraform Destroy
+
+on:
+  workflow_dispatch:  # Permite ejecutarlo manualmente desde GitHub UI
+
+jobs:
+  terraform-destroy:
+    runs-on: ubuntu-latest
+    environment:
+      name: Development
+
+    defaults:
+        run:
+            working-directory: terraform
+
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.6
+
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve
+        env:
+          TF_VAR_project: ${{ vars.GCP_PROJECT }}   # si usas variables dinámicas
