@@ -85,23 +85,19 @@ terraform destroy -auto-approve
 
 Se ejecuta automáticamente en push a main dentro de la carpeta terraform/ o manualmente desde GitHub.
 
-bash
-Copy
-Edit
-.github/workflows/deploy.yml
+
+```bash.github/workflows/deploy.yml```
 
 **Eliminar recursos (destroy)**
 Puedes crear un workflow llamado destroy.yml o usar el mismo con un selector manual para destruir.
 
 📌 Notas
-El terraform.tfvars se genera dinámicamente desde variables de GitHub.
 
-El backend puede configurarse para guardar el estado en GCS.
+ - El terraform.tfvars se genera dinámicamente desde variables de GitHub.
 
-Revisa que el Service Account tenga permisos suficientes (ej: Compute Admin, Storage Admin, etc.).
+ - El backend puede configurarse para guardar el estado en GCS.
+
+ - Revisa que el Service Account tenga permisos suficientes (ej: Compute Admin, Storage Admin, etc.).
 
 ## ✨ Contacto
 Proyecto creado por [Marco Catalan].
-
-
-¿Quieres que también te genere el `terraform/main.tf` y `variables.tf` como parte de la documentación?
