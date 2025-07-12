@@ -86,7 +86,9 @@ terraform destroy -auto-approve
 Se ejecuta automáticamente en push a main dentro de la carpeta terraform/ o manualmente desde GitHub.
 
 
-```bash.github/workflows/deploy.yml```
+```bash
+   .github/workflows/deploy.yml
+   ```
 
 **Eliminar recursos (destroy)**
 Puedes crear un workflow llamado destroy.yml o usar el mismo con un selector manual para destruir.
