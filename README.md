@@ -70,7 +70,7 @@ terraform init
 
 3. Aplicar cambios:
 ```bash
-terraform apply -var="project=YOUR_PROJECT" -var="region=us-central1" -var="zone=us-central1-a" -auto-approve```
+terraform apply -var="project=YOUR_PROJECT" -var="region=us-central1" -var="zone=us-central1-a" -auto-approve
 ```
 
 4. Destruir infraestructura (opcional):
@@ -79,15 +79,18 @@ terraform destroy -auto-approve
 ```
 ---
 
-🤖 CI/CD con GitHub Actions
-Desplegar (apply)
+## 🤖 CI/CD con GitHub Actions
+
+**Desplegar (apply)**
+
 Se ejecuta automáticamente en push a main dentro de la carpeta terraform/ o manualmente desde GitHub.
 
 bash
 Copy
 Edit
 .github/workflows/deploy.yml
-Eliminar recursos (destroy)
+
+**Eliminar recursos (destroy)**
 Puedes crear un workflow llamado destroy.yml o usar el mismo con un selector manual para destruir.
 
 📌 Notas
@@ -97,7 +100,7 @@ El backend puede configurarse para guardar el estado en GCS.
 
 Revisa que el Service Account tenga permisos suficientes (ej: Compute Admin, Storage Admin, etc.).
 
-✨ Contacto
+## ✨ Contacto
 Proyecto creado por [Marco Catalan].
 
 
