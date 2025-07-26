@@ -5,15 +5,15 @@ provider "google" {
 }
 
 module "network" {
-  source        = "../../modules/network"
-  instance_name = "postgresql-instance-dev"
-  machine_type  = "f1-micro"
-  environment   = "dev"
-  project       = var.project
-  region        = var.region
-  zone          = var.zone
-  network_name  = "default"
-  policy_name   = "allow-prefect-ports"
+  source         = "../../modules/network"
+  instance_name  = "postgresql-instance-dev"
+  machine_type   = "f1-micro"
+  environment    = "dev"
+  project        = var.project
+  region         = var.region
+  zone           = var.zone
+  network_name   = "default"
+  policy_name    = "allow-prefect-ports"
   allow_protocol = "tcp"
   allow_ports    = ["22", "8080", "3000", "4200", "5432"]
   source_ranges  = ["0.0.0.0/0"]
