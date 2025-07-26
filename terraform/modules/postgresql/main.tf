@@ -16,7 +16,15 @@ resource "google_compute_firewall" "allow_prefect_ports" {
 resource "google_compute_instance" "postgresql_instance" {
   name         = var.instance_name
   machine_type = var.machine_type
-  tags         = [var.environment]
+  tags = var.tags 
+  metadata = {
+    description = var.description
+  }
+  labels = {
+  env         = var.environment
+  description = var.description
+}
+
 
   boot_disk {
     initialize_params {

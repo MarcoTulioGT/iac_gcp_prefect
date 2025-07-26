@@ -12,4 +12,5 @@ module "postgresql" {
   project       = var.project
   region        = var.region
   zone          = var.zone
+  description   = "PostgreSQL instance for development environment"
 }

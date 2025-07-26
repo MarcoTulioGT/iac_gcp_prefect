@@ -20,3 +20,13 @@ variable "boot_image" {
 variable "environment" {
   type = string
 }
+
+variable "description" {
+  type = string
+}
+
+variable "tags" {
+  description = "Etiquetas de red para la instancia (firewall rules, etc.)"
+  type        = list(string)
+  default     = []
+}
