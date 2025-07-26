@@ -1,7 +1,12 @@
 name: Terraform Destroy
 
 on:
-  workflow_dispatch:  # Permite ejecutarlo manualmente desde GitHub UI
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to deploy (dev, prod)"
+        required: true
+        default: dev
 
 jobs:
   terraform-destroy:
