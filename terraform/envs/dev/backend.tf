@@ -1,7 +1,7 @@
 terraform {
   backend "gcs" {
     bucket = "backend-terraform25"
-    prefix = "dev/terraform/state"
+    prefix = "dev/terraform/state_prefect"
   }
 
   required_providers {
