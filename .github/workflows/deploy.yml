@@ -2,6 +2,12 @@ name: Terraform Deploy GCP
 
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to deploy (dev, prod)"
+        required: true
+        default: dev
+
 
 permissions:
   contents: read
@@ -16,7 +22,8 @@ jobs:
 
     defaults:
       run:
-        working-directory: terraform
+        working-directory: terraform/envs/${{ github.event.inputs.environment }}
+
 
     steps:
     - name: Checkout code
@@ -44,7 +51,7 @@ jobs:
 
     - name: Crear terraform.tfvars
       run: |
-        cat <<EOF > terraform.tfvars
+        cat <<EOF > terraform/envs/${{ github.event.inputs.environment }}
         project     = "${{ vars.GCP_PROJECT }}"
         region      = "${{ vars.GCP_REGION }}"
         zone        = "${{ vars.GCP_ZONE }}"
