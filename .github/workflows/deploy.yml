@@ -50,8 +50,9 @@ jobs:
         export_environment_variables: true
 
     - name: Crear terraform.tfvars
+      working-directory: terraform/envs/${{ github.event.inputs.environment }}
       run: |
-        cat <<EOF > terraform/envs/${{ github.event.inputs.environment }}/terraform.tfvars
+        cat <<EOF > terraform.tfvars
         project     = "${{ vars.GCP_PROJECT }}"
         region      = "${{ vars.GCP_REGION }}"
         zone        = "${{ vars.GCP_ZONE }}"
