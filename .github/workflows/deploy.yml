@@ -22,7 +22,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: terraform/envs/${{ github.event.inputs.environment }}
+        working-directory: terraform/envs/${{ github.event.inputs.environment }}/terraform.tfvars
 
 
     steps:
