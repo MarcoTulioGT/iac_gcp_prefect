@@ -11,7 +11,7 @@ jobs:
 
     defaults:
         run:
-            working-directory: terraform
+          working-directory: terraform/envs/${{ github.event.inputs.environment }}
 
     permissions:
       contents: read
@@ -32,6 +32,7 @@ jobs:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
       - name: Crear terraform.tfvars
+        working-directory: terraform/envs/${{ github.event.inputs.environment }}
         run: |
           cat <<EOF > terraform.tfvars
           project     = "${{ vars.GCP_PROJECT }}"
@@ -46,4 +47,3 @@ jobs:
         run: terraform destroy -auto-approve
         env:
           TF_LOG: DEBUG
-   # si usas variables dinámicas
