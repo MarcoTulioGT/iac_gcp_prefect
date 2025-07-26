@@ -22,7 +22,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: terraform/envs/${{ github.event.inputs.environment }}/terraform.tfvars
+        working-directory: terraform/envs/${{ github.event.inputs.environment }}
 
 
     steps:
@@ -51,7 +51,7 @@ jobs:
 
     - name: Crear terraform.tfvars
       run: |
-        cat <<EOF > terraform/envs/${{ github.event.inputs.environment }}
+        cat <<EOF > terraform/envs/${{ github.event.inputs.environment }}/terraform.tfvars
         project     = "${{ vars.GCP_PROJECT }}"
         region      = "${{ vars.GCP_REGION }}"
         zone        = "${{ vars.GCP_ZONE }}"
