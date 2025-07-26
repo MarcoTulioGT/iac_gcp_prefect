@@ -1,9 +1,3 @@
-provider "google" {
-  project = var.project
-  region  = var.region
-  zone    = var.zone
-}
-
 module "postgresql" {
   source        = "../../modules/postgresql"
   instance_name = "postgresql-instance-dev"
