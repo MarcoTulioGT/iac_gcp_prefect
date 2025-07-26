@@ -45,8 +45,8 @@ resource "google_compute_instance" "postgresql_instance" {
 
   scheduling {
     provisioning_model = "SPOT" 
-    preemptible        = true   
-    automatic_restart  = false  
+    preemptible        = true  
+    automatic_restart  = false 
   }
 
   network_interface {
