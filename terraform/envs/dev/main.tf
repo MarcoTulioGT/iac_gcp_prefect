@@ -4,6 +4,16 @@ provider "google" {
   zone    = var.zone
 }
 
+module "network" {
+  source       = "../../modules/network"
+  instance_name = "postgresql-instance-dev"
+  machine_type  = "f1-micro"
+  environment   = "dev"
+  project       = var.project
+  region        = var.region
+  zone          = var.zone
+  description   = "postgresql-instance-for-development-environment"
+}
 module "postgresql" {
   source        = "../../modules/postgresql"
   instance_name = "postgresql-instance-dev"
