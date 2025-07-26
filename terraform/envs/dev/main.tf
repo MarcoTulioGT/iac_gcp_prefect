@@ -4,6 +4,6 @@ module "postgresql" {
   machine_type  = "f1-micro"
   environment   = "dev"
   project       = var.project  
-  region  = var.region
-  zone    = var.zone
+  region        = var.region
+  zone          = var.zone
 }
