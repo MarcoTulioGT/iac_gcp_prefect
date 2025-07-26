@@ -44,9 +44,9 @@ resource "google_compute_instance" "postgresql_instance" {
   }
 
   scheduling {
-    provisioning_model = "SPOT" # ✅ Recomendado (nuevo)
-    preemptible        = true   # 👈 Requerido para compatibilidad
-    automatic_restart  = false  # 👈 Spot VMs no deben reiniciarse
+    provisioning_model = "SPOT" 
+    preemptible        = true   
+    automatic_restart  = false  
   }
 
   network_interface {
