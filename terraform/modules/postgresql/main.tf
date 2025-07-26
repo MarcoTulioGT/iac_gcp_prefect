@@ -15,12 +15,12 @@ resource "google_compute_firewall" "allow_prefect_ports" {
 
 resource "google_compute_instance" "postgresql_instance" {
   name         = var.instance_name
-  machine_type = "f1-micro"
-  tags         = ["web", "dev"]
+  machine_type = var.machine_type
+  tags         = [var.environment]
 
   boot_disk {
     initialize_params {
-      image = "debian-cloud/debian-12"
+      image = var.boot_image
     }
   }
 
