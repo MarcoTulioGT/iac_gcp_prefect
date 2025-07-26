@@ -13,11 +13,11 @@ variable "zone" {
 
 variable "instance_name" {}
 variable "machine_type" {
-  default = "f1-micro"
+  type = string
 }
 variable "boot_image" {
   default = "debian-cloud/debian-12"
 }
 variable "environment" {
-  default = "dev"
+  type = string
 }
