@@ -5,7 +5,7 @@ provider "google" {
 }
 
 module "network" {
-  source       = "../../modules/network"
+  source        = "../../modules/network"
   instance_name = "postgresql-instance-dev"
   machine_type  = "f1-micro"
   environment   = "dev"
