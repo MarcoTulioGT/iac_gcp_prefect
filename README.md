@@ -7,15 +7,26 @@ Este proyecto define y despliega infraestructura en Google Cloud Platform (GCP) 
 ## 📁 Estructura del Proyecto
 
 ```text
-├── terraform/
-│   ├── main.tf              # Recursos e infraestructura
-│   ├── variables.tf         # Variables definidas
-│   ├── terraform.tfvars     # Valores de variables (generado en GitHub Actions)
-├── .github/
-│   └── workflows/
-│       ├── deploy.yml       # Workflow para terraform apply
-│       └── destroy.yml      # Workflow para terraform destroy (opcional)
-└── README.md
+terraform/
+├── modules/                           # Módulos reutilizables de infraestructura
+│   └── postgresql/                    # Lógica de creación de PostgreSQL en GCP (VM o Cloud SQL)
+│       ├── main.tf                    # Recursos del módulo
+│       ├── variables.tf               # Variables requeridas por el módulo
+│       └── outputs.tf                 # Valores exportados
+│
+├── envs/                              # Configuraciones por entorno (dev, prod, etc.)
+│   ├── dev/
+│   │   ├── main.tf                    # Llama al módulo postgresql con variables específicas
+│   │   ├── backend.tf                 # Backend remoto (ej. GCS) para almacenar estado
+│   │   ├── variables.tf               # Variables declaradas en este entorno
+│   │   └── terraform.tfvars           # Valores de variables inyectados dinámicamente
+│   └── prod/
+│       ├── main.tf
+│       ├── backend.tf
+│       ├── variables.tf
+│       └── terraform.tfvars
+│
+└── README.md                          # Documentación del proyecto
 ```
 ---
 
