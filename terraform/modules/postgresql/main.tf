@@ -18,13 +18,13 @@ resource "google_compute_instance" "postgresql_instance" {
   }
 
   scheduling {
-    provisioning_model = "SPOT"
-    preemptible        = true
-    automatic_restart  = false
+    provisioning_model = var.provisioning_model
+    preemptible        = var.preemptible
+    automatic_restart  = var.automatic_restart
   }
 
   network_interface {
-    network = "default"
+    network = var.network
     access_config {}
   }
 }

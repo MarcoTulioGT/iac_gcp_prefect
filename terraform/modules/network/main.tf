@@ -1,14 +1,14 @@
 
 resource "google_compute_firewall" "allow_prefect_ports" {
-  name    = "allow-prefect-ports"
-  network = "default"
+  name    = var.policy_name
+  network = var.network_name
 
   allow {
-    protocol = "tcp"
-    ports    = ["22", "8080", "3000", "4200", "5432"]
+    protocol = var.allow_protocol
+    ports    = var.allow_ports
   }
 
-  source_ranges = ["0.0.0.0/0"]
-  description   = "Allow SSH, HTTP app, and other custom ports"
+  source_ranges = var.source_ranges
+  description   = var.description
 }
 

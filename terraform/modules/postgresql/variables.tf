@@ -15,6 +15,7 @@ variable "machine_type" {
   type = string
 }
 variable "boot_image" {
+  type = string
   default = "debian-cloud/debian-12"
 }
 variable "environment" {
@@ -29,4 +30,21 @@ variable "tags" {
   description = "Etiquetas de red para la instancia (firewall rules, etc.)"
   type        = list(string)
   default     = []
+}
+
+variable "provisioning_model" {
+  type = string
+}
+
+variable "preemptible" {
+  type = bool
+  default = true
+}
+
+variable "automatic_restart" {
+  type = bool
+  default = false
+}
+variable "network_name" {
+  type = string
 }
