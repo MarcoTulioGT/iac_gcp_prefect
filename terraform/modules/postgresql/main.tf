@@ -3,7 +3,7 @@
 resource "google_compute_instance" "postgresql_instance" {
   name         = var.instance_name
   machine_type = var.machine_type
-  tags = var.tags 
+  tags = var.tags
   metadata = {
     description = var.description
   }
@@ -24,7 +24,7 @@ resource "google_compute_instance" "postgresql_instance" {
   }
 
   network_interface {
-    network = var.network
+    network = var.network_name
     access_config {}
   }
 }
