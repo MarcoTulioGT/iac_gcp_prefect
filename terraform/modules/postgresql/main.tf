@@ -14,7 +14,7 @@ resource "google_compute_firewall" "allow_prefect_ports" {
 
 
 resource "google_compute_instance" "postgresql_instance" {
-  name         = "postgresql-instance"
+  name         = var.instance_name
   machine_type = "f1-micro"
   tags         = ["web", "dev"]
 
