@@ -31,6 +31,7 @@ module "postgresql" {
   automatic_restart  = false
   boot_image         = "debian-cloud/debian-12" #ubuntu-os-cloud/ubuntu-minimal-2204-lts,debian-cloud/debian-12"
   network_name       = "default"
+  ssh_public_key     = var.ssh_public_key
 }
 
 #module "ansible_inventory" {

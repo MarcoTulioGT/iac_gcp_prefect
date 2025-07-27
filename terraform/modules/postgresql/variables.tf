@@ -48,3 +48,7 @@ variable "automatic_restart" {
 variable "network_name" {
   type = string
 }
+variable "ssh_public_key" {
+  description = "Llave pública SSH para acceso a la VM"
+  type        = string
+}

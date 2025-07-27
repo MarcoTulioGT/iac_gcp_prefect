@@ -12,3 +12,8 @@ variable "zone" {
   description = "Zona específica dentro de la región"
   type        = string
 }
+
+variable "ssh_public_key" {
+  description = "Llave pública SSH para acceso a la VM"
+  type        = string
+}

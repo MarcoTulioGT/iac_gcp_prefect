@@ -6,6 +6,7 @@ resource "google_compute_instance" "postgresql_instance" {
   tags = var.tags
   metadata = {
     description = var.description
+    ssh-keys = "debian:${var.ssh_public_key}"
   }
   labels = {
   env         = var.environment
@@ -27,4 +28,5 @@ resource "google_compute_instance" "postgresql_instance" {
     network = var.network_name
     access_config {}
   }
+  
 }

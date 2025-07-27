@@ -13,6 +13,22 @@ permissions:
   id-token: write
 
 jobs:
+  security:
+    name: Security Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generar clave SSH temporal
+        id: generate_ssh_key
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N "" -C "gha@runner"
+          echo "SSH_PUBLIC_KEY<<EOF" >> $GITHUB_ENV
+          cat ~/.ssh/id_rsa.pub >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Verificar variable ssh_public_key
+        run: echo "${{ env.SSH_PUBLIC_KEY }}"
+
   terraform:
     name: Terraform Apply Postgresql VM + Network
     runs-on: ubuntu-latest
@@ -50,9 +66,10 @@ jobs:
       - name: Crear terraform.tfvars
         run: |
           cat <<EOF > terraform.tfvars
-          project     = "${{ vars.GCP_PROJECT }}"
-          region      = "${{ vars.GCP_REGION }}"
-          zone        = "${{ vars.GCP_ZONE }}"
+          project        = "${{ vars.GCP_PROJECT }}"
+          region         = "${{ vars.GCP_REGION }}"
+          zone           = "${{ vars.GCP_ZONE }}"
+          ssh_public_key = "${{ env.SSH_PUBLIC_KEY }}"
           EOF
 
       - name: Terraform Init
