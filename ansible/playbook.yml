@@ -1,0 +1,7 @@
+- name: Aprovisionar servidor PostgreSQL
+  hosts: postgresql
+  become: true
+  vars:
+    ansible_user: debian
+  roles:
+    - postgresql
