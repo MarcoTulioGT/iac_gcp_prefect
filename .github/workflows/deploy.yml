@@ -131,11 +131,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Agregar SSH private key
+      - name: Agregar SSH private key correctamente
         run: |
           mkdir -p ~/.ssh
-          printf "%s\n" "${{ needs.security.outputs.ssh_private_key }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+          cat << 'EOF' > ~/.ssh/id_rsa
+          ${{ needs.security.outputs.ssh_private_key }}
+          EOF
+              chmod 600 ~/.ssh/id_rsa
 
       - name: Debug key file
         run: |
