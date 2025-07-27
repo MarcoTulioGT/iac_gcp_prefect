@@ -43,6 +43,7 @@ jobs:
           project     = "${{ vars.GCP_PROJECT }}"
           region      = "${{ vars.GCP_REGION }}"
           zone        = "${{ vars.GCP_ZONE }}"
+          ssh_public_key = "${{ env.SSH_PUBLIC_KEY }}"
           EOF
 
       - name: Terraform Init
