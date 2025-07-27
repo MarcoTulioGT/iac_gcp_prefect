@@ -14,17 +14,17 @@ permissions:
 
 jobs:
   security:
-    name: Security SSH Key Generation
+    name: Security SSH Key
     runs-on: ubuntu-latest
+    outputs:
+      ssh_public_key: ${{ steps.generate_ssh_key.outputs.ssh_public_key }}
     steps:
       - name: Generar clave SSH temporal
         id: generate_ssh_key
         run: |
           mkdir -p ~/.ssh
           ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N "" -C "gha@runner"
-          echo "SSH_PUBLIC_KEY<<EOF" >> $GITHUB_ENV
-          cat ~/.ssh/id_rsa.pub >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          echo "SSH_PUBLIC_KEY=$(cat ~/.ssh/id_rsa.pub)" >> $GITHUB_OUTPUT
 
       - name: Verificar variable ssh_public_key
         run: echo "${{ env.SSH_PUBLIC_KEY }}"
@@ -39,6 +39,8 @@ jobs:
     defaults:
       run:
         working-directory: terraform/envs/${{ github.event.inputs.environment }}
+    outputs:
+      postgresql_ip: ${{ steps.get_ip.outputs.ip }}
 
     steps:
       - name: Checkout code
@@ -70,7 +72,7 @@ jobs:
           project        = "${{ vars.GCP_PROJECT }}"
           region         = "${{ vars.GCP_REGION }}"
           zone           = "${{ vars.GCP_ZONE }}"
-          ssh_public_key = "${{ env.SSH_PUBLIC_KEY }}"
+          ssh_public_key = "${{ needs.security.outputs.ssh_public_key }}"
           EOF
 
       - name: Terraform Init
@@ -95,11 +97,11 @@ jobs:
       - name: Obtener IP pública
         id: get_ip
         run: |
-            echo "POSTGRESQL_IP=$(terraform output -raw postgresql_public_ip)" >> $GITHUB_ENV
+          echo "ip=$(terraform output -raw postgresql_public_ip)" >> $GITHUB_OUTPUT
 
       - name: Verificar IP obtenida
         run: |
-          echo "La IP pública de PostgreSQL es: $POSTGRESQL_IP"
+          echo "La IP pública de PostgreSQL es: $ip"
 
   ansible:
     name: Ansible Deploy PostgreSQL
@@ -116,7 +118,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Agregar clave SSH privada
+      - name: Agregar SSH private key
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
@@ -125,7 +127,7 @@ jobs:
       - name: Generar inventory.ini
         run: |
           echo "[postgresql]" > inventory.ini
-          echo "vm-postgresql ansible_host=${{ env.POSTGRESQL_IP }} ansible_user=debian ansible_ssh_private_key_file=~/.ssh/id_rsa" >> inventory.ini
+          echo "vm-postgresql ansible_host=${{ needs.terraform.outputs.postgresql_ip }} ansible_user=debian ansible_ssh_private_key_file=~/.ssh/id_rsa" >> inventory.ini
 
       - name: Mostrar contenido de inventory.ini
         run: cat inventory.ini
