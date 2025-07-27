@@ -32,3 +32,9 @@ module "postgresql" {
   boot_image         = "debian-cloud/debian-12" #ubuntu-os-cloud/ubuntu-minimal-2204-lts,debian-cloud/debian-12"
   network_name       = "default"
 }
+
+#module "ansible_inventory" {
+#  source         = "../../modules/ansible_inventory"
+#  path_ansible   = "${path.module}/../../ansible"
+#  postgresql_instance_dev_ip  = google_compute_instance.postgresql_instance.network_interface[0].access_config[0].nat_ip
+#}

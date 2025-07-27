@@ -1,4 +1,4 @@
-name: Terraform Deploy GCP
+name: Terraform + Ansible Deploy PostgreSQL GCP
 
 on:
   workflow_dispatch:
@@ -76,3 +76,22 @@ jobs:
       run: terraform apply -auto-approve
       env:
         TF_LOG: DEBUG
+
+    - name: Obtener IP pública
+      id: get_ip
+      run: |
+        IP=$(terraform output -raw postgresql_ip)
+        echo "POSTGRESQL_IP=$IP" >> $GITHUB_ENV
+
+    - name: Generar inventory.ini
+      working-directory: ansible
+      run: |
+        echo "[postgresql]" > inventory.ini
+        echo "vm-postgresql ansible_host=${POSTGRESQL_IP} ansible_user=debian ansible_ssh_private_key_file=~/.ssh/id_rsa" >> inventory.ini
+
+    - name: Instalar Ansible
+      run: sudo apt-get update && sudo apt-get install -y ansible
+  
+    - name: Ejecutar playbook Ansible
+      working-directory: ansible
+      run: ansible-playbook -i inventory.ini playbook.yml
