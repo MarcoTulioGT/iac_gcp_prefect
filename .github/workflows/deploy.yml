@@ -18,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       ssh_public_key: ${{ steps.generate_ssh_key.outputs.ssh_public_key }}
+      ssh_private_key: ${{ steps.generate_ssh_key.outputs.ssh_private_key }}
     steps:
       - name: Generar clave SSH temporal
         id: generate_ssh_key
@@ -25,6 +26,9 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N "" -C "gha@runner"
           echo "SSH_PUBLIC_KEY=$(cat ~/.ssh/id_rsa.pub)" >> $GITHUB_OUTPUT
+          echo "SSH_PRIVATE_KEY<<EOF" >> $GITHUB_ENV
+          cat ~/.ssh/id_rsa >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
 
       - name: Verificar variable ssh_public_key
         run: echo "${{ env.SSH_PUBLIC_KEY }}"
@@ -121,7 +125,7 @@ jobs:
       - name: Agregar SSH private key
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          printf "%s\n" "${{ env.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
       - name: Generar inventory.ini
