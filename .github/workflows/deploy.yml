@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   terraform:
-    name: Terraform Apply
+    name: Terraform Apply Postgresql VM + Network
     runs-on: ubuntu-latest
     environment:
       name: Development
@@ -77,10 +77,15 @@ jobs:
       - name: Obtener IP pública
         id: get_ip
         run: |
-          echo "POSTGRESQL_IP=$(terraform output -raw postgresql_ip)" >> $GITHUB_ENV
+          IP=$(terraform output -raw postgresql_public_ip 2>/dev/null || true)
+          if [ -z "$IP" ]; then
+            echo "::error::No se encontró output 'postgresql_public_ip'. Asegúrate de que el módulo PostgreSQL se ejecutó correctamente."
+            exit 1
+          fi
+          echo "POSTGRESQL_IP=$IP" >> $GITHUB_ENV
 
   ansible:
-    name: Ansible Deployment
+    name: Ansible Deployment PostgreSQL
     runs-on: ubuntu-latest
     needs: terraform
     environment:
