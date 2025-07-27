@@ -91,7 +91,7 @@ jobs:
 
     - name: Instalar Ansible
       run: sudo apt-get update && sudo apt-get install -y ansible
-  
+
     - name: Ejecutar playbook Ansible
       working-directory: ansible
       run: ansible-playbook -i inventory.ini playbook.yml

@@ -1,4 +1,4 @@
-name: Terraform Destroy
+name: Terraform Destroy PostgreSQL GCP
 
 on:
   workflow_dispatch:
