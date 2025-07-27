@@ -6,8 +6,6 @@ provider "google" {
 
 module "network" {
   source         = "../../modules/network"
-  instance_name  = "postgresql-instance-dev"
-  machine_type   = "f1-micro"
   environment    = "dev"
   project        = var.project
   region         = var.region
@@ -31,6 +29,6 @@ module "postgresql" {
   provisioning_model = "SPOT"
   preemptible        = true
   automatic_restart  = false
-  boot_image         = "debian-cloud/debian-12"
+  boot_image         = "ubuntu-os-cloud/ubuntu-minimal-2404-lts" #ubuntu-os-cloud/ubuntu-minimal-2404-lts-debian-cloud/debian-12"
   network_name       = "default"
 }
