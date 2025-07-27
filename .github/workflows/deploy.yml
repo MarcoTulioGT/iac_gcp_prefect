@@ -137,6 +137,11 @@ jobs:
           printf "%s\n" "${{ needs.security.outputs.ssh_private_key }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
+      - name: Debug key file
+        run: |
+          file ~/.ssh/id_rsa
+          cat ~/.ssh/id_rsa | head -n 20
+
       - name: Generar inventory.ini
         run: |
           echo "[postgresql]" > inventory.ini
