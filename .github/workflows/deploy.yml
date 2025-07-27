@@ -18,21 +18,20 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       ssh_public_key: ${{ steps.generate_ssh_key.outputs.ssh_public_key }}
-      ssh_private_key: ${{ steps.generate_ssh_key.outputs.ssh_private_key }}
+      ssh_private_key_b64: ${{ steps.generate_ssh_key.outputs.ssh_private_key_b64 }}
     steps:
       - name: Generar clave SSH temporal
         id: generate_ssh_key
         run: |
           mkdir -p ~/.ssh
           ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N "" -C "gha@runner"
-          # Exportar clave pública al output
-          echo "ssh_public_key<<EOF" >> $GITHUB_OUTPUT
-          cat ~/.ssh/id_rsa.pub >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-          # Exportar clave privada al output (formato multilinea)
-          echo "ssh_private_key<<EOF" >> $GITHUB_OUTPUT
-          cat ~/.ssh/id_rsa >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+
+          # Exportar clave pública
+          echo "ssh_public_key=$(cat ~/.ssh/id_rsa.pub)" >> $GITHUB_OUTPUT
+
+          # Exportar clave privada codificada en base64
+          PRIVATE_KEY_B64=$(base64 -w 0 ~/.ssh/id_rsa)
+          echo "ssh_private_key_b64=$PRIVATE_KEY_B64" >> $GITHUB_OUTPUT
 
       - name: Verificar variable ssh_public_key
         run: |
@@ -119,7 +118,7 @@ jobs:
   ansible:
     name: Ansible Deploy PostgreSQL
     runs-on: ubuntu-latest
-    needs: terraform
+    needs: [security, terraform]
     environment:
       name: Development
 
@@ -134,10 +133,12 @@ jobs:
       - name: Agregar SSH private key correctamente
         run: |
           mkdir -p ~/.ssh
-          cat << EOF > ~/.ssh/id_rsa
-          ${{ needs.security.outputs.ssh_private_key }}
-          EOF
-              chmod 600 ~/.ssh/id_rsa
+          echo "${{ needs.security.outputs.ssh_private_key_b64 }}" | base64 --decode > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      - name: Validar contenido de la clave
+        run: |
+            echo "Base64 key length: ${#${{ needs.security.outputs.ssh_private_key_b64 }}}"
 
       - name: Debug key file
         run: |
