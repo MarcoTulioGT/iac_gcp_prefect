@@ -29,6 +29,6 @@ module "postgresql" {
   provisioning_model = "SPOT"
   preemptible        = true
   automatic_restart  = false
-  boot_image         = "ubuntu-os-cloud/ubuntu-minimal-2204-lts" #ubuntu-os-cloud/ubuntu-minimal-2404-lts-debian-cloud/debian-12"
+  boot_image         = "debian-cloud/debian-12" #ubuntu-os-cloud/ubuntu-minimal-2204-lts,debian-cloud/debian-12"
   network_name       = "default"
 }
