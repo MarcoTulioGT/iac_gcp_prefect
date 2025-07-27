@@ -101,7 +101,7 @@ jobs:
 
       - name: Verificar IP obtenida
         run: |
-          echo "La IP pública de PostgreSQL es: $ip"
+          echo "La IP pública de PostgreSQL es: $postgresql_public_ip"
 
   ansible:
     name: Ansible Deploy PostgreSQL
@@ -132,6 +132,11 @@ jobs:
       - name: Mostrar contenido de inventory.ini
         run: cat inventory.ini
         working-directory: ansible
+
+      - name: Agregar IP a known_hosts
+        run: |
+          ssh-keyscan -H ${{ needs.terraform.outputs.postgresql_ip }} >> ~/.ssh/known_hosts
+      
 
       - name: Instalar Ansible
         run: sudo apt-get update && sudo apt-get install -y ansible
