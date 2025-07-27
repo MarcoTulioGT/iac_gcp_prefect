@@ -135,7 +135,11 @@ jobs:
 
       - name: Agregar IP a known_hosts
         run: |
-          ssh-keyscan -H ${{ needs.terraform.outputs.postgresql_ip }} >> ~/.ssh/known_hosts
+          for i in {1..5}; do
+            ssh-keyscan -H ${{ env.POSTGRESQL_IP }} >> ~/.ssh/known_hosts && break
+            echo "Reintentando... ($i)"
+            sleep 5
+          done
 
       - name: Instalar Ansible
         run: sudo apt-get update && sudo apt-get install -y ansible
