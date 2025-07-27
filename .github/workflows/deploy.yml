@@ -95,12 +95,11 @@ jobs:
       - name: Obtener IP pública
         id: get_ip
         run: |
-          IP=$(terraform output -raw postgresql_public_ip 2>/dev/null || true)
-          if [ -z "$IP" ]; then
-            echo "::error::No se encontró output 'postgresql_public_ip'. Asegúrate de que el módulo PostgreSQL se ejecutó correctamente."
-            exit 1
-          fi
-          echo "POSTGRESQL_IP=$IP" >> $GITHUB_ENV
+            echo "POSTGRESQL_IP=$(terraform output -raw postgresql_public_ip)" >> $GITHUB_ENV
+
+      - name: Verificar IP obtenida
+        run: |
+          echo "La IP pública de PostgreSQL es: $POSTGRESQL_IP"
 
   ansible:
     name: Ansible Deploy PostgreSQL
