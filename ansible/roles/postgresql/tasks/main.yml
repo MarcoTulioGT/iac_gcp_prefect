@@ -25,6 +25,15 @@
     enabled: true
     state: started
 
+- name: Permitir conexiones en todas las interfaces
+  lineinfile:
+    path: "/etc/postgresql/{{ postgresql_version }}/main/postgresql.conf"
+    regexp: '^\s*#?\s*listen_addresses\s*='
+    line: "listen_addresses = '{{ postgresql_listen_addresses }}'"
+    state: present
+    backup: true
+  notify: restart postgresql
+
 - name: Configurar archivo pg_hba.conf (opcional)
   lineinfile:
     path: "/etc/postgresql/{{ postgresql_version }}/main/pg_hba.conf"
@@ -32,20 +41,20 @@
     state: present
   notify: restart postgresql
 
-- name: Crear base de datos
-  become: true
-  become_user: postgres
-  vars:
-    ansible_become_exe: sudo
-  postgresql_db:
-    name: "{{ item.name }}"
-  loop: "{{ postgresql_databases }}"
+#- name: Crear base de datos
+#  become: true
+#  become_user: postgres
+#  vars:
+#    ansible_become_exe: sudo
+#  postgresql_db:
+#    name: "{{ item.name }}"
+#  loop: "{{ postgresql_databases }}"
 
 
-- name: Crear usuarios
-  become_user: postgres
-  postgresql_user:
-    name: "{{ item.name }}"
-    password: "{{ item.password }}"
-    priv: "{{ item.priv }}"
-  loop: "{{ postgresql_users }}"
+#- name: Crear usuarios
+#  become_user: postgres
+#  postgresql_user:
+#    name: "{{ item.name }}"
+#    password: "{{ item.password }}"
+#    priv: "{{ item.priv }}"
+#  loop: "{{ postgresql_users }}"
