@@ -3,8 +3,13 @@ postgresql_listen_addresses: "*"
 postgresql_port: 5432
 postgresql_databases:
   - name: appdb
+  - name: test_db
 postgresql_users:
   - name: dbuser
     password: supersecret
     db: appdb
+    priv: "ALL"
+  - name: test_user
+    password: testuser25
+    db: test_db
     priv: "ALL"
