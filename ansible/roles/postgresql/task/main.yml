@@ -1,3 +1,7 @@
+- name: DEBUG - Mostrar variable postgresql_version
+  debug:
+    msg: "Versión de PostgreSQL: {{ postgresql_version }}"
+
 - name: Instalar dependencias
   apt:
     name:
