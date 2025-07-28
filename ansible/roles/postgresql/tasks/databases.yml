@@ -1,0 +1,8 @@
+- name: Crear base de datos
+  become: true
+  become_user: postgres
+  vars:
+    ansible_become_exe: sudo
+  postgresql_db:
+    name: "{{ item.name }}"
+  loop: "{{ postgresql_databases }}"

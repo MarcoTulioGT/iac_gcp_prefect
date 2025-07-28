@@ -6,4 +6,5 @@ postgresql_databases:
 postgresql_users:
   - name: dbuser
     password: supersecret
+    db: appdb
     priv: "ALL"

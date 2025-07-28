@@ -1,0 +1,15 @@
+- name: Permitir conexiones en todas las interfaces
+  lineinfile:
+    path: "/etc/postgresql/{{ postgresql_version }}/main/postgresql.conf"
+    regexp: '^\s*#?\s*listen_addresses\s*='
+    line: "listen_addresses = '{{ postgresql_listen_addresses }}'"
+    state: present
+    backup: true
+  notify: restart postgresql
+
+- name: Configurar archivo pg_hba.conf (opcional)
+  lineinfile:
+    path: "/etc/postgresql/{{ postgresql_version }}/main/pg_hba.conf"
+    line: "host all all 0.0.0.0/0 md5"
+    state: present
+  notify: restart postgresql

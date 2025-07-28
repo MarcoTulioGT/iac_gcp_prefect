@@ -2,59 +2,14 @@
   debug:
     msg: "Versión de PostgreSQL: {{ postgresql_version }}"
 
-- name: Instalar dependencias
-  apt:
-    name:
-      - python3-pip
-      - python3-venv
-      - git
-    state: present
-    update_cache: yes
+- name: Instalar PostgreSQL y dependencias
+  import_tasks: install.yml
 
-- name: Instalar PostgreSQL
-  apt:
-    name: 
-      - "postgresql-{{ postgresql_version }}"
-      - "postgresql-contrib-{{ postgresql_version }}"
-    state: present
-    update_cache: yes
+- name: Configurar PostgreSQL
+  import_tasks: config.yml
 
-- name: Asegurar que PostgreSQL esté iniciado
-  service:
-    name: postgresql
-    enabled: true
-    state: started
+- name: Crear usuarios
+  import_tasks: users.yml
 
-- name: Permitir conexiones en todas las interfaces
-  lineinfile:
-    path: "/etc/postgresql/{{ postgresql_version }}/main/postgresql.conf"
-    regexp: '^\s*#?\s*listen_addresses\s*='
-    line: "listen_addresses = '{{ postgresql_listen_addresses }}'"
-    state: present
-    backup: true
-  notify: restart postgresql
-
-- name: Configurar archivo pg_hba.conf (opcional)
-  lineinfile:
-    path: "/etc/postgresql/{{ postgresql_version }}/main/pg_hba.conf"
-    line: "host all all 0.0.0.0/0 md5"
-    state: present
-  notify: restart postgresql
-
-#- name: Crear base de datos
-#  become: true
-#  become_user: postgres
-#  vars:
-#    ansible_become_exe: sudo
-#  postgresql_db:
-#    name: "{{ item.name }}"
-#  loop: "{{ postgresql_databases }}"
-
-
-#- name: Crear usuarios
-#  become_user: postgres
-#  postgresql_user:
-#    name: "{{ item.name }}"
-#    password: "{{ item.password }}"
-#    priv: "{{ item.priv }}"
-#  loop: "{{ postgresql_users }}"
+- name: Crear bases de datos
+  import_tasks: databases.yml

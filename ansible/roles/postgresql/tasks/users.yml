@@ -1,0 +1,9 @@
+- name: Crear usuarios de PostgreSQL
+  become_user: postgres
+  postgresql_user:
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+    priv: "{{ item.priv | default('') }}"
+    db: "{{ item.db | default(omit) }}"
+    state: present
+  loop: "{{ postgresql_users }}"
