@@ -169,5 +169,11 @@ jobs:
         run: ls -lh
         working-directory: ansible
 
+      - name: Listar roles disponibles
+        run: ls -R roles
+
+      - name: Verificar existencia de tareas
+        run: cat roles/postgresql/tasks/main.yml
+
       - name: Ejecutar playbook Ansible
         run: ansible-playbook -i inventory.ini playbook.yml
