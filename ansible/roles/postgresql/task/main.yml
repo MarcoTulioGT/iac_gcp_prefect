@@ -7,4 +7,37 @@
       - postgresql
       - postgresql-contrib
     state: present
-    update_cache: yesß
+    update_cache: yes
+
+- name: Instalar PostgreSQL
+  apt:
+    name: "postgresql-{{ postgresql_version }}"
+    state: present
+    update_cache: yes
+
+- name: Asegurar que PostgreSQL esté iniciado
+  service:
+    name: postgresql
+    enabled: true
+    state: started
+
+- name: Configurar archivo pg_hba.conf (opcional)
+  lineinfile:
+    path: "/etc/postgresql/{{ postgresql_version }}/main/pg_hba.conf"
+    line: "host all all 0.0.0.0/0 md5"
+    state: present
+  notify: restart postgresql
+
+- name: Crear base de datos
+  become_user: postgres
+  postgresql_db:
+    name: "{{ item.name }}"
+  loop: "{{ postgresql_databases }}"
+
+- name: Crear usuarios
+  become_user: postgres
+  postgresql_user:
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+    priv: "{{ item.priv }}"
+  loop: "{{ postgresql_users }}"

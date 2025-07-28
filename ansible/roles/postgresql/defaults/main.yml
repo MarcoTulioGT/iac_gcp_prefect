@@ -1,0 +1,9 @@
+postgresql_version: 15
+postgresql_listen_addresses: "*"
+postgresql_port: 5432
+postgresql_databases:
+  - name: appdb
+postgresql_users:
+  - name: dbuser
+    password: supersecret
+    priv: "ALL"
