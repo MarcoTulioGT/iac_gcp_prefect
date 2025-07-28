@@ -1,9 +1,14 @@
-- name: Crear usuarios de PostgreSQL
-  become_user: postgres
-  postgresql_user:
-    name: "{{ item.name }}"
-    password: "{{ item.password }}"
-    priv: "{{ item.priv | default('') }}"
-    db: "{{ item.db | default(omit) }}"
-    state: present
+- name: Crear usuarios PostgreSQL
+  become: true
+  shell: |
+    sudo -u postgres psql -c "DO \$\$
+    BEGIN
+      IF NOT EXISTS (
+        SELECT FROM pg_catalog.pg_user WHERE usename = '{{ item.name }}'
+      ) THEN
+        CREATE ROLE {{ item.name }} LOGIN PASSWORD '{{ item.password }}';
+        GRANT ALL PRIVILEGES ON DATABASE {{ postgresql_databases[0].name }} TO {{ item.name }};
+      END IF;
+    END
+    \$\$;"
   loop: "{{ postgresql_users }}"

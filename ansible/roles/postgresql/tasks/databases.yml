@@ -1,8 +1,6 @@
-- name: Crear bases de datos
+- name: Crear base de datos usando psql
   become: true
-  become_user: postgres
-  block:
-    - name: Crear base de datos
-      postgresql_db:
-        name: "{{ item.name }}"
-      loop: "{{ postgresql_databases }}"
+  shell: |
+    sudo -u postgres psql -tc "SELECT 1 FROM pg_database WHERE datname = '{{ item.name }}'" | grep -q 1 || \
+    sudo -u postgres createdb {{ item.name }}
+  loop: "{{ postgresql_databases }}"
