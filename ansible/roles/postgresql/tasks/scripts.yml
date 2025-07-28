@@ -1,6 +1,13 @@
+- name: Copiar script init.sql
+  become: true
+  copy:
+    src: init.sql  # Ruta relativa al directorio roles/postgresql/files/
+    dest: /tmp/init.sql
+    owner: postgres
+    group: postgres
+    mode: '0644'
+
+
 - name: Ejecutar script init.sql usando psql
   become: true
-  shell: |
-    sudo -u postgres psql -d test_db -f /tmp/init.sql
-  args:
-    creates: /tmp/init.sql
+  shell: sudo -u postgres psql -d test_db -f /tmp/init.sql
