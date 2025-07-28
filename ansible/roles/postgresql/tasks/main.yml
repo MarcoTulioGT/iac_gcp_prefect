@@ -33,6 +33,7 @@
   notify: restart postgresql
 
 - name: Crear base de datos
+  become: true
   become_user: postgres
   postgresql_db:
     name: "{{ item.name }}"
