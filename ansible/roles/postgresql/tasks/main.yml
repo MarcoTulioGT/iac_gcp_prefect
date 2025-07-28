@@ -8,8 +8,8 @@
 - name: Configurar PostgreSQL
   import_tasks: config.yml
 
-- name: Crear usuarios
-  import_tasks: users.yml
-
 - name: Crear bases de datos
   import_tasks: databases.yml
+
+- name: Crear usuarios
+  import_tasks: users.yml
