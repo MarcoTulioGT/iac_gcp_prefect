@@ -13,3 +13,6 @@
 
 - name: Crear usuarios
   import_tasks: users.yml
+
+- name: Ejecutar script
+  import_tasks: scripts.yml

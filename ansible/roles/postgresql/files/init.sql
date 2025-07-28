@@ -1,8 +1,3 @@
-CREATE USER test_user WITH PASSWORD 'testuser25';
-CREATE DATABASE test_db OWNER test_user;
-GRANT ALL PRIVILEGES ON DATABASE test_db TO test_user;
-
-
 CREATE TABLE empleados (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,

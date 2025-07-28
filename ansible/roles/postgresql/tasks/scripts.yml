@@ -1,0 +1,6 @@
+- name: Ejecutar script init.sql usando psql
+  become: true
+  shell: |
+    sudo -u postgres psql -d test_db -f /tmp/init.sql
+  args:
+    creates: /tmp/init.sql
