@@ -21,7 +21,7 @@ git clone https://github.com/MarcoTulioGT/iac_gcp_postgresql.git
 ```text
 terraform/
 ├── modules/                           # Módulos reutilizables de infraestructura
-│   └── postgresql/                    # Lógica de creación de PostgreSQL en GCP (VM o Cloud SQL)
+│   └── postgresql/                    # Lógica de creación de server PostgreSQL en GCP (VM o Cloud SQL)
 │       ├── main.tf                    # Recursos del módulo
 │       ├── variables.tf               # Variables requeridas por el módulo
 │       └── outputs.tf                 # Valores exportados
@@ -42,7 +42,7 @@ terraform/
 └──.github/
    └── workflows/
       ├── deploy.yml                   # Workflow de GitHub Actions para aplicar infraestructura
-      └── destroy.yml                  # (Opcional) Workflow para destruir infraestructura
+      └── destroy.yml                  # Workflow para destruir infraestructura
                        
 ```
 ---
@@ -53,8 +53,9 @@ terraform/
 - Habilitar:
   - Compute Engine API
   - Cloud Storage API
-- Crear un bucket de GCS si usas backend remoto (`terraform.tfstate`)
+- Crear un bucket de GCS si para backend remoto (`debe ser igual al configurado en env/dev/backend.tf`)  
 - Crear un Service Account con permisos necesarios:
+  - 
   - roles/editor o específicos para los recursos
 - Crear una clave JSON para la Service Account
 
