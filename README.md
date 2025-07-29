@@ -3,8 +3,8 @@
 Este proyecto automatiza la creación de una VM en GCP, instala PostgreSQL y la configura usando Ansible.
 
 ## 🧰 Tecnologías utilizadas
-- Terraform
-- Ansible
+- Terraform (Infraestructura como Código)
+- Ansible (DevOps Automation Platform)
 - Google Cloud Platform (GCP)
 - GitHub Actions (CI/CD)
 
