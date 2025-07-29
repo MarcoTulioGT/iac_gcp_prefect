@@ -13,6 +13,7 @@ Este proyecto automatiza la creación de una VM en GCP, instala PostgreSQL y la 
 ### 1. Clonar el repositorio
 ```bash
 git clone https://github.com/MarcoTulioGT/gcp-prefect.git
+```
 ---
 
 ## 📁 Estructura del Proyecto
