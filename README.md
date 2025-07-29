@@ -121,12 +121,13 @@ User: dbuser
 Password: supersecret
 
 Haz clic en Test Connection y luego en Finish.
-🔒 Nota: Si la conexión falla, asegúrate de que:
+
+### 🔒 Nota: Si la conexión falla, asegúrate de que:
 El puerto 5432 esté abierto en el firewall.
 El archivo pg_hba.conf y postgresql.conf hayan sido correctamente configurados por Ansible.
 Tu IP local tenga acceso o estés en una red permitida.
 
-**Eliminar recursos (destroy)**
+## **Eliminar recursos (destroy)**
 Usa el workflow (`Terraform Destroy PostgreSQL GCP`) y dispatch para seleccionar el entorno dev.
 
 ```bash
