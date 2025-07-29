@@ -1,6 +1,6 @@
-# Terraform + Ansible + PostgreSQL on GCP
+# Automatización de PostgreSQL en GCP con Terraform y Ansible
 
-Este proyecto automatiza la creación de una VM en GCP, instala PostgreSQL y la configura usando Ansible.
+Este proyecto automatiza la provisión de una instancia PostgreSQL en GCP usando Terraform (infraestructura como código) y Ansible (automatización de configuración).
 
 ## 🧰 Tecnologías utilizadas
 - Terraform (Infraestructura como Código)
@@ -21,7 +21,7 @@ git clone https://github.com/MarcoTulioGT/iac_gcp_postgresql.git
 ```text
 terraform/
 ├── modules/                           # Módulos reutilizables de infraestructura
-│   └── postgresql/                    # Lógica de creación de server PostgreSQL en GCP (VM o Cloud SQL)
+│   └── postgresql/                    # Lógica para crear una VM con PostgreSQL en GCP
 │       ├── main.tf                    # Recursos del módulo
 │       ├── variables.tf               # Variables requeridas por el módulo
 │       └── outputs.tf                 # Valores exportados
@@ -50,13 +50,15 @@ terraform/
 ## 🧩 Prerrequisitos
 
 - Cuenta en [Google Cloud](https://console.cloud.google.com/)
-- Habilitar:
-  - Compute Engine API
-  - Cloud Storage API
+### Habilitar APIs necesarias
+
+```bash
+gcloud services enable compute.googleapis.com
+gcloud services enable storage.googleapis.com
+```
 - Crear un bucket de GCS si para backend remoto (`debe ser igual al configurado en env/dev/backend.tf`)  
 - Crear un Service Account con permisos necesarios:
-  - 
-  - roles/editor o específicos para los recursos
+  - para Storage, compute y viewer específicos para los recursos
 - Crear una clave JSON para la Service Account
 
 ---
@@ -79,56 +81,31 @@ terraform/
    | `GCP_REGION`   | Región (e.g. `us-central1`) |
    | `GCP_ZONE`     | Zona (e.g. `us-central1-a`) |
 
----
 
-## 🛠️ Uso local (opcional)
-
-1. Autenticarse con Google Cloud:
-
-```bash
-gcloud auth application-default login
-export GOOGLE_APPLICATION_CREDENTIALS=/ruta/credenciales.json
-```
-
-2. Inicializar Terraform:
-
-```bash
-cd terraform
-terraform init
-```
-
-3. Aplicar cambios:
-```bash
-terraform apply -var="project=YOUR_PROJECT" -var="region=us-central1" -var="zone=us-central1-a" -auto-approve
-```
-
-4. Destruir infraestructura (opcional):
-```bash
-terraform destroy -auto-approve
-```
----
-
-## 🤖 CI/CD con GitHub Actions
+## 🤖 CI/CD Ejecutar desde GitHub Actions
 
 **Desplegar (apply)**
 
-Se ejecuta automáticamente en push a main dentro de la carpeta terraform/ o manualmente desde GitHub.
-
+Usa el workflow (`Terraform + Ansible Deploy PostgreSQL GCP`) y dispatch para seleccionar el entorno dev.
 
 ```bash
    .github/workflows/deploy.yml
    ```
 
 **Eliminar recursos (destroy)**
-Puedes crear un workflow llamado destroy.yml o usar el mismo con un selector manual para destruir.
+Usa el workflow (`Terraform Destroy PostgreSQL GCP`) y dispatch para seleccionar el entorno dev.
+
+```bash
+   .github/workflows/destroy.yml
+   ```
 
 📌 Notas
 
  - El terraform.tfvars se genera dinámicamente desde variables de GitHub.
 
- - El backend puede configurarse para guardar el estado en GCS.
+ - El backend está configurado para guardar el estado en GCS.
 
- - Revisa que el Service Account tenga permisos suficientes (ej: Compute Admin, Storage Admin, etc.).
+ - Revisa que el Service Account tenga permisos suficientes.
 
 ## ✨ Contacto
-Proyecto creado por [Marco Catalan].
+Proyecto creado por [Marco Catalán].
