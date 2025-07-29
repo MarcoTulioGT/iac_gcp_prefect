@@ -107,6 +107,25 @@ Usa el workflow (`Terraform + Ansible Deploy PostgreSQL GCP`) y dispatch para se
 5. Usa Ansible para instalar y configurar PostgreSQL.
 ```
 
+## 🔗 Verificación de conexión con DBeaver
+Una vez desplegada la infraestructura y configurado PostgreSQL, puedes conectarte fácilmente desde DBeaver u otro cliente PostgreSQL siguiendo estos pasos:
+
+Abre DBeaver y selecciona Database > New Database Connection.
+
+Elige el motor PostgreSQL.
+En el formulario de conexión, usa los siguientes valores:
+Host: IP pública de la VM (puedes obtenerla desde la salida de Terraform o en la consola de GCP).
+Port: 5432 (puerto por defecto, también definido en Ansible)
+Database: appdb
+User: dbuser
+Password: supersecret
+
+Haz clic en Test Connection y luego en Finish.
+🔒 Nota: Si la conexión falla, asegúrate de que:
+El puerto 5432 esté abierto en el firewall.
+El archivo pg_hba.conf y postgresql.conf hayan sido correctamente configurados por Ansible.
+Tu IP local tenga acceso o estés en una red permitida.
+
 **Eliminar recursos (destroy)**
 Usa el workflow (`Terraform Destroy PostgreSQL GCP`) y dispatch para seleccionar el entorno dev.
 
