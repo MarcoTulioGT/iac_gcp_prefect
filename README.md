@@ -1,7 +1,18 @@
-# 🚀 Infraestructura en GCP con Terraform + GitHub Actions
+# Terraform + Ansible + PostgreSQL on GCP
 
-Este proyecto define y despliega infraestructura en Google Cloud Platform (GCP) usando Terraform. La automatización del despliegue se realiza mediante GitHub Actions.
+Este proyecto automatiza la creación de una VM en GCP, instala PostgreSQL y la configura usando Ansible.
 
+## 🧰 Tecnologías utilizadas
+- Terraform
+- Ansible
+- Google Cloud Platform (GCP)
+- GitHub Actions (CI/CD)
+
+## 🚀 Instrucciones de uso
+
+### 1. Clonar el repositorio
+```bash
+git clone https://github.com/MarcoTulioGT/gcp-prefect.git
 ---
 
 ## 📁 Estructura del Proyecto
