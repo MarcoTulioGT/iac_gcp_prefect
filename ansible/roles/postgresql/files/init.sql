@@ -4,5 +4,5 @@ CREATE TABLE empleados (
     salario DECIMAL(10, 2),
     fecha_contratacion DATE
 );
-insert into empleados(nombre, salario, fecha_contratacion) values ('Marco',24000,'2015-06-15');
+insert into empleados(nombre, salario, fecha_contratacion) values ('Marco',3500,'2011-04-11');
 GRANT ALL PRIVILEGES ON TABLE empleados TO test_user;
