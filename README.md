@@ -38,12 +38,12 @@ terraform/
 │       ├── variables.tf
 │       └── terraform.tfvars
 │
-└── README.md   
+└── README.md                          # Documentación del proyecto
 └──.github/
    └── workflows/
-      ├── deploy.yml                     # Workflow de GitHub Actions para aplicar infraestructura
-      └── destroy.yml                    # (Opcional) Workflow para destruir infraestructura
-                       # Documentación del proyecto
+      ├── deploy.yml                   # Workflow de GitHub Actions para aplicar infraestructura
+      └── destroy.yml                  # (Opcional) Workflow para destruir infraestructura
+                       
 ```
 ---
 
