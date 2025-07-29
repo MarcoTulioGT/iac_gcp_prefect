@@ -63,7 +63,7 @@ terraform/
 gcloud services enable compute.googleapis.com
 gcloud services enable storage.googleapis.com
 ```
-- Crear un bucket de GCS si para backend remoto (`debe ser igual al configurado en env/dev/backend.tf`)  
+- Crear un bucket de GCS para backend remoto (`debe ser igual al configurado en env/dev/backend.tf`)  
 - Crear un Service Account con permisos necesarios:
   - para Storage, compute y viewer específicos para los recursos
 - Crear una clave JSON para la Service Account
