@@ -1,8 +1,11 @@
 # Automatización de PostgreSQL en GCP con Terraform y Ansible
 
-![Terraform](https://img.shields.io/badge/Terraform-v1.6.6-blue)
-![GCP](https://img.shields.io/badge/GCP-VM-yellow)
-![Ansible](https://img.shields.io/badge/Ansible-Automation-red)
+[![Terraform](https://img.shields.io/badge/Terraform-v1.6.6-623CE4?logo=terraform&logoColor=white)](https://www.terraform.io/)
+[![GCP](https://img.shields.io/badge/GCP-VM-FBBC05?logo=google-cloud&logoColor=black)](https://cloud.google.com/)
+[![Ansible](https://img.shields.io/badge/Ansible-Automation-EE0000?logo=ansible&logoColor=white)](https://www.ansible.com/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-336791?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/MarcoTulioGT/iac_gcp_postgresql/deploy.yml?label=deploy&logo=github)](https://github.com/MarcoTulioGT/iac_gcp_postgresql/actions/workflows/deploy.yml)
+
 
 Este proyecto automatiza la provisión de una instancia PostgreSQL en GCP usando Terraform (infraestructura como código) y Ansible (automatización de configuración).
 
