@@ -1,7 +1,7 @@
 terraform {
   backend "gcs" {
-    bucket = "backend-terraform25"
-    prefix = "dev/terraform/state_prefect"
+    bucket = "backend-terraform26"
+    prefix = "dev/terraform/state_posgresql"
   }
 
   required_providers {
