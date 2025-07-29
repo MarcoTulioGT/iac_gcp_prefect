@@ -108,24 +108,34 @@ Usa el workflow (`Terraform + Ansible Deploy PostgreSQL GCP`) y dispatch para se
 ```
 
 ## 🔗 Verificación de conexión con DBeaver
-Una vez desplegada la infraestructura y configurado PostgreSQL, puedes conectarte fácilmente desde DBeaver u otro cliente PostgreSQL siguiendo estos pasos:
 
-Abre DBeaver y selecciona Database > New Database Connection.
+Una vez desplegada la infraestructura y configurado PostgreSQL, puedes conectarte fácilmente desde [DBeaver](https://dbeaver.io/) u otro cliente PostgreSQL siguiendo estos pasos:
 
-Elige el motor PostgreSQL.
-En el formulario de conexión, usa los siguientes valores:
-Host: IP pública de la VM (puedes obtenerla desde la salida de Terraform o en la consola de GCP).
-Port: 5432 (puerto por defecto, también definido en Ansible)
-Database: appdb
-User: dbuser
-Password: supersecret
+### 🧭 Pasos para conectarte
 
-Haz clic en Test Connection y luego en Finish.
+1. Abre **DBeaver** y ve a `Database > New Database Connection`.
+2. Selecciona el motor **PostgreSQL**.
+3. Completa los campos con los siguientes valores:
 
-### 🔒 Nota: Si la conexión falla, asegúrate de que:
-El puerto 5432 esté abierto en el firewall.
-El archivo pg_hba.conf y postgresql.conf hayan sido correctamente configurados por Ansible.
-Tu IP local tenga acceso o estés en una red permitida.
+   | Campo    | Valor                                                       |
+   |----------|-------------------------------------------------------------|
+   | Host     | IP pública de la VM (ver salida de Terraform o consola GCP) |
+   | Port     | `5432`                                                      |
+   | Database | `appdb`                                                     |
+   | User     | `dbuser`                                                    |
+   | Password | `supersecret`                                               |
+
+4. Haz clic en **Test Connection**.
+5. Si la prueba es exitosa, haz clic en **Finish**.
+
+### 🛡️ Nota de seguridad
+
+Si la conexión falla, verifica lo siguiente:
+
+- El puerto `5432` está habilitado en el firewall de GCP.
+- Los archivos `pg_hba.conf` y `postgresql.conf` fueron correctamente configurados por Ansible.
+- Tu IP local tiene acceso a la VM o está incluida en las reglas de firewall.
+
 
 ## **Eliminar recursos (destroy)**
 Usa el workflow (`Terraform Destroy PostgreSQL GCP`) y dispatch para seleccionar el entorno dev.
