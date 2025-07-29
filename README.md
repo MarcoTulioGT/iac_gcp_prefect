@@ -98,9 +98,8 @@ Usa el workflow (`Terraform + Ansible Deploy PostgreSQL GCP`) y dispatch para se
 ```bash
    .github/workflows/deploy.yml
    ```
-```md
 ### ¿Qué hace el workflow `deploy.yml`?
-
+```md
 1. Genera una clave SSH temporal.
 2. Aplica infraestructura con Terraform.
 3. Obtiene la IP pública de la VM creada.
