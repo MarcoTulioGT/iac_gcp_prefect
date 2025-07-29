@@ -159,4 +159,4 @@ Usa el workflow (`Terraform Destroy PostgreSQL GCP`) y dispatch para seleccionar
 
 Proyecto creado por [Marco Catalán].
 
-📫 ¿Dudas o sugerencias? ¡Contáctame por GitHub o abre un Issue!
+📫 ¿Dudas o sugerencias? ¡Contáctame por GitHub!
