@@ -1,5 +1,9 @@
 # Automatización de PostgreSQL en GCP con Terraform y Ansible
 
+![Terraform](https://img.shields.io/badge/Terraform-v1.6.6-blue)
+![GCP](https://img.shields.io/badge/GCP-VM-yellow)
+![Ansible](https://img.shields.io/badge/Ansible-Automation-red)
+
 Este proyecto automatiza la provisión de una instancia PostgreSQL en GCP usando Terraform (infraestructura como código) y Ansible (automatización de configuración).
 
 ## 🧰 Tecnologías utilizadas
@@ -91,6 +95,15 @@ Usa el workflow (`Terraform + Ansible Deploy PostgreSQL GCP`) y dispatch para se
 ```bash
    .github/workflows/deploy.yml
    ```
+```md
+### ¿Qué hace el workflow `deploy.yml`?
+
+1. Genera una clave SSH temporal.
+2. Aplica infraestructura con Terraform.
+3. Obtiene la IP pública de la VM creada.
+4. Genera el archivo `inventory.ini` para Ansible.
+5. Usa Ansible para instalar y configurar PostgreSQL.
+```
 
 **Eliminar recursos (destroy)**
 Usa el workflow (`Terraform Destroy PostgreSQL GCP`) y dispatch para seleccionar el entorno dev.
@@ -106,6 +119,12 @@ Usa el workflow (`Terraform Destroy PostgreSQL GCP`) y dispatch para seleccionar
  - El backend está configurado para guardar el estado en GCS.
 
  - Revisa que el Service Account tenga permisos suficientes.
+   
+ - 🔐 La clave SSH generada se usa solo en tiempo de ejecución, no se guarda como secreto persistente.
+
 
 ## ✨ Contacto
+
 Proyecto creado por [Marco Catalán].
+
+📫 ¿Dudas o sugerencias? ¡Contáctame por GitHub o abre un Issue!
