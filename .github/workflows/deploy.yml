@@ -79,17 +79,13 @@ jobs:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
           export_environment_variables: true
 
-      - name: Crear terraform.tfvars
-        shell: bash
+      - name: Crear terraform.tfvars sin mostrar contenido
         run: |
           echo "::add-mask::${{ needs.security.outputs.ssh_public_key }}"
-            (
-              echo "project        = \"${{ vars.GCP_PROJECT }}\""
-              echo "region         = \"${{ vars.GCP_REGION }}\""
-              echo "zone           = \"${{ vars.GCP_ZONE }}\""
-              echo "ssh_public_key = \"${{ needs.security.outputs.ssh_public_key }}\""
-            ) > terraform.tfvars
-
+          echo "project        = \"${{ vars.GCP_PROJECT }}\"" >> terraform.tfvars
+          echo "region         = \"${{ vars.GCP_REGION }}\"" >> terraform.tfvars
+          echo "zone           = \"${{ vars.GCP_ZONE }}\"" >> terraform.tfvars
+          echo "ssh_public_key = \"${{ needs.security.outputs.ssh_public_key }}\"" >> terraform.tfvars
 
       - name: Terraform Init
         run: terraform init
