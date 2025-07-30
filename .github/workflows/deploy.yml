@@ -81,9 +81,7 @@ jobs:
 
       - name: Crear terraform.tfvars
         run: |
-          echo "::add-mask::${{ needs.security.outputs.ssh_public_key }}"
-
-          echo "::add-mask::$(cat terraform.tfvars)"
+          cat <<EOF > terraform.tfvars
               project        = "${{ vars.GCP_PROJECT }}"
               region         = "${{ vars.GCP_REGION }}"
               zone           = "${{ vars.GCP_ZONE }}"
