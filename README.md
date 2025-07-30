@@ -93,7 +93,7 @@ gcloud services enable storage.googleapis.com
 
 **Desplegar (apply)**
 
-Usa el workflow (`Terraform + Ansible Deploy PostgreSQL GCP`) y dispatch para seleccionar el entorno dev.
+Usa el workflow (`Deploy Terraform + Ansible PostgreSQL GCP`) y dispatch para seleccionar el entorno dev.
 
 ```bash
    .github/workflows/deploy.yml
@@ -138,7 +138,7 @@ Si la conexión falla, verifica lo siguiente:
 
 
 ## **Eliminar recursos (destroy)**
-Usa el workflow (`Terraform Destroy PostgreSQL GCP`) y dispatch para seleccionar el entorno dev.
+Usa el workflow (`Destroy Terraform PostgreSQL GCP`) y dispatch para seleccionar el entorno dev.
 
 ```bash
    .github/workflows/destroy.yml
