@@ -81,6 +81,7 @@ jobs:
 
       - name: Crear archivo terraform.tfvars desde script (más seguro)
         run: |
+          echo "::add-mask::${{ needs.security.outputs.ssh_public_key }}"
           echo "${{ needs.security.outputs.ssh_public_key }}" > ssh.key
           chmod 600 ssh.key
           cat > write_tfvars.sh <<'EOF'
