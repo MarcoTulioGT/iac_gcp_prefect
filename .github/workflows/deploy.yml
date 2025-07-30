@@ -50,6 +50,7 @@ jobs:
 
     defaults:
       run:
+        shell: bash
         working-directory: terraform/envs/${{ github.event.inputs.environment }}
     outputs:
       postgresql_ip: ${{ steps.get_ip.outputs.ip }}
@@ -81,12 +82,14 @@ jobs:
       - name: Crear terraform.tfvars
         run: |
           echo "::add-mask::${{ needs.security.outputs.ssh_public_key }}"
-          {
-            echo 'project        = \"${{ vars.GCP_PROJECT }}\"'
-            echo 'region         = \"${{ vars.GCP_REGION }}\"'
-            echo 'zone           = \"${{ vars.GCP_ZONE }}\"'
-            echo 'ssh_public_key = \"${{ needs.security.outputs.ssh_public_key }}\"'
-          } > terraform.tfvars
+
+          echo "::add-mask::$(cat terraform.tfvars)"
+              project        = "${{ vars.GCP_PROJECT }}"
+              region         = "${{ vars.GCP_REGION }}"
+              zone           = "${{ vars.GCP_ZONE }}"
+              ssh_public_key = "${{ needs.security.outputs.ssh_public_key }}"
+              EOF
+
 
       - name: Terraform Init
         run: terraform init
