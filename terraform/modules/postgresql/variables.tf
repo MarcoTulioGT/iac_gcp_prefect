@@ -1,6 +1,7 @@
 variable "project" {
   description = "The GCP project ID where resources will be created"
   type        = string
+  sensitive   = true
 }
 variable "region" {
   type = string
@@ -51,4 +52,5 @@ variable "network_name" {
 variable "ssh_public_key" {
   description = "Llave pública SSH para acceso a la VM"
   type        = string
+  sensitive   = true
 }

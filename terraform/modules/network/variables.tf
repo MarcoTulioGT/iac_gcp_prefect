@@ -1,6 +1,7 @@
 variable "project" {
   description = "The GCP project ID where resources will be created"
   type        = string
+  sensitive   = true
 }
 variable "region" {
   type = string
@@ -19,6 +20,7 @@ variable "tags" {
 
 variable "network_name" {
   type = string
+  sensitive   = true
 }
 
 variable "policy_name" {

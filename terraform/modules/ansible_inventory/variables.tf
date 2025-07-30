@@ -4,4 +4,5 @@ variable "path_ansible" {
 
 variable "postgresql_instance_dev_ip" {
   type = string
+  sensitive   = true
 }

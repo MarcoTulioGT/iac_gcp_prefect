@@ -1,6 +1,7 @@
 variable "project" {
   description = "ID del proyecto de GCP"
   type        = string
+  sensitive   = true
 }
 
 variable "region" {
@@ -16,4 +17,5 @@ variable "zone" {
 variable "ssh_public_key" {
   description = "Llave pública SSH para acceso a la VM"
   type        = string
+  sensitive   = true
 }
