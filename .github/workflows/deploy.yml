@@ -80,13 +80,15 @@ jobs:
           export_environment_variables: true
 
       - name: Crear terraform.tfvars
+        shell: bash
         run: |
-          cat <<EOF > terraform.tfvars
-              project        = "${{ vars.GCP_PROJECT }}"
-              region         = "${{ vars.GCP_REGION }}"
-              zone           = "${{ vars.GCP_ZONE }}"
-              ssh_public_key = "${{ needs.security.outputs.ssh_public_key }}"
-              EOF
+          echo "::add-mask::${{ needs.security.outputs.ssh_public_key }}"
+            (
+              echo "project        = \"${{ vars.GCP_PROJECT }}\""
+              echo "region         = \"${{ vars.GCP_REGION }}\""
+              echo "zone           = \"${{ vars.GCP_ZONE }}\""
+              echo "ssh_public_key = \"${{ needs.security.outputs.ssh_public_key }}\""
+            ) > terraform.tfvars
 
 
       - name: Terraform Init
