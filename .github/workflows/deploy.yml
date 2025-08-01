@@ -53,8 +53,8 @@ jobs:
         shell: bash
         working-directory: terraform/envs/${{ github.event.inputs.environment }}
     outputs:
-      postgresql_ip: ${{ steps.get_ip.outputs.ip }}
-      prefect_ip: ${{ steps.get_ip.outputs.ip }}
+      postgresql_ip: ${{ steps.get_ip_postgresql.outputs.ip }}
+      prefect_ip: ${{ steps.get_ip_prefect.outputs.ip }}
 
     steps:
       - name: Checkout code
@@ -118,12 +118,12 @@ jobs:
 #        env:
 #          TF_LOG: DEBUG
 
-      - name: Obtener IP pública
+      - name: Obtener IP pública postgresql
         id: get_ip_postgresql
         run: |
           echo "ip=$(terraform output -raw postgresql_public_ip)" >> $GITHUB_OUTPUT
 
-      - name: Obtener IP pública
+      - name: Obtener IP pública prefect
         id: get_ip_prefect
         run: |
           echo "ip=$(terraform output -raw prefect_public_ip)" >> $GITHUB_OUTPUT
