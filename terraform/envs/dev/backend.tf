@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket = "backend-terraform26"
+    bucket = "backend-terraform25"
     prefix = "dev/terraform/state_posgresql-prefect"
   }
 
