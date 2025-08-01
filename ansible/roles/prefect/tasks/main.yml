@@ -1,2 +1,5 @@
 - name: Instalar Prefect y dependencias
   import_tasks: install.yml
+
+- name: Configurar Prefect
+  import_tasks: config.yml

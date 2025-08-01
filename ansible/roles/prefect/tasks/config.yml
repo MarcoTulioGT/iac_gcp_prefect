@@ -1,0 +1,5 @@
+- name: Crear symlink para Prefect CLI
+  file:
+    src: /opt/prefect_venv/bin/prefect
+    dest: /usr/local/bin/prefect
+    state: link

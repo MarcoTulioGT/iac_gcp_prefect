@@ -1,11 +1,16 @@
-- name: Instalar dependencias
+- name: Instalar dependencias de Python
   apt:
     name:
+      - python3
       - python3-pip
+      - python3-venv
     state: present
     update_cache: yes
 
-- name: Instalar Prefect
-  ansible.builtin.pip:
-    name: prefect
-    executable: pip3
+- name: Crear virtualenv para Prefect
+  command: python3 -m venv /opt/prefect_venv
+  args:
+    creates: /opt/prefect_venv
+
+- name: Instalar Prefect en virtualenv
+  command: /opt/prefect_venv/bin/pip install --upgrade pip prefect
