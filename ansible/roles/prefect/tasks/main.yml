@@ -6,5 +6,5 @@
   when: ansible_os_family == 'Debian'
 
 
-  - name: Instalar Prefect y dependencias
+- name: Instalar Prefect y dependencias
   import_tasks: install.yml
