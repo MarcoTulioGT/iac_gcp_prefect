@@ -1,4 +1,4 @@
-name: Deploy Terraform + Ansible PostgreSQL GCP
+name: Deploy Terraform + Ansible PREFECT GCP
 
 on:
   workflow_dispatch:

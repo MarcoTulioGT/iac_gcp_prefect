@@ -1,4 +1,4 @@
-name: Destroy Terraform PostgreSQL GCP
+name: Destroy Terraform PREFECT GCP
 
 on:
   workflow_dispatch:
