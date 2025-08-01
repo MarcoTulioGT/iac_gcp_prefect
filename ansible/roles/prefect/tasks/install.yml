@@ -1,0 +1,13 @@
+- name: Instalar dependencias
+  apt:
+    name:
+      - python3-pip
+      - python3-venv
+      - git
+    state: present
+    update_cache: yes
+
+- name: Install Prefect globally (if not using virtualenv)
+  pip:
+    name: "prefect{{ '==' + prefect_version if prefect_version is string and prefect_version[0]|int is not none else prefect_version }}"
+  when: not use_virtualenv

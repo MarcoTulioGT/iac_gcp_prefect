@@ -54,6 +54,7 @@ jobs:
         working-directory: terraform/envs/${{ github.event.inputs.environment }}
     outputs:
       postgresql_ip: ${{ steps.get_ip.outputs.ip }}
+      prefect_ip: ${{ steps.get_ip.outputs.ip }}
 
     steps:
       - name: Checkout code
@@ -160,6 +161,8 @@ jobs:
         run: |
           echo "[postgresql]" > inventory.ini
           echo "vm-postgresql ansible_host=${{ needs.terraform.outputs.postgresql_ip }} ansible_user=debian ansible_ssh_private_key_file=~/.ssh/id_rsa" >> inventory.ini
+          echo "[prefect]" > inventory.ini
+          echo "vm-prefect ansible_host=${{ needs.terraform.outputs.postgresql_ip }} ansible_user=debian ansible_ssh_private_key_file=~/.ssh/id_rsa" >> inventory.ini
 
       - name: Mostrar contenido de inventory.ini
         run: cat inventory.ini

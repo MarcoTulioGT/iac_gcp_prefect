@@ -5,3 +5,10 @@
     ansible_user: debian
   roles:
     - postgresql
+
+
+- name: Instalar Prefect
+  hosts: prefect
+  become: true
+  roles:
+    - prefect

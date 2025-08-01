@@ -1,0 +1,3 @@
+prefect_version: ">=2.0"
+use_virtualenv: true
+venv_path: "/opt/prefect-venv"
