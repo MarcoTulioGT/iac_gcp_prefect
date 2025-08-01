@@ -33,16 +33,16 @@ jobs:
           PRIVATE_KEY_B64=$(base64 -w 0 ~/.ssh/id_rsa)
           echo "ssh_private_key_b64=$PRIVATE_KEY_B64" >> $GITHUB_OUTPUT
 
-#      - name: Verificar variable ssh_public_key
-#        run: |
-#          echo "${{ steps.generate_ssh_key.outputs.ssh_public_key }}"
+      - name: Verificar variable ssh_public_key
+        run: |
+          echo "${{ steps.generate_ssh_key.outputs.ssh_public_key }}"
 
-#      - name: Verificar variable ssh_private_key
-#        run: |
-#          echo "${{ steps.generate_ssh_key.outputs.ssh_private_key }}"
+      - name: Verificar variable ssh_private_key
+        run: |
+          echo "${{ steps.generate_ssh_key.outputs.ssh_private_key }}"
 
   terraform:
-    name: Terraform Apply Postgresql
+    name: Terraform Apply Prefect
     runs-on: ubuntu-latest
     needs: security
     environment:
