@@ -1,10 +1,2 @@
-- name: Ensure python3-venv is installed (Debian/Ubuntu)
-  apt:
-    name: python3-venv
-    state: present
-  become: true
-  when: ansible_os_family == 'Debian'
-
-
 - name: Instalar Prefect y dependencias
   import_tasks: install.yml

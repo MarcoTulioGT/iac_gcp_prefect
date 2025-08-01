@@ -198,7 +198,9 @@ jobs:
         run: ls -R roles
 
       - name: Verificar existencia de tareas
-        run: cat roles/postgresql/tasks/main.yml
+        run: |
+         cat roles/postgresql/tasks/main.yml
+         cat roles/prefect/tasks/main.yml
 
       - name: Ejecutar playbook Ansible
         run: ansible-playbook -i inventory.ini playbook.yml
