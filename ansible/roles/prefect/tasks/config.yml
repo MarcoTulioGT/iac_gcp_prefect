@@ -10,11 +10,33 @@
   args:
     executable: /bin/bash
 
-- name: Copiar archivo de servicio
+- name: Iniciar Prefect Server en background (systemd)
+  become: true
   copy:
-    src: prefect.service
     dest: /etc/systemd/system/prefect.service
-  notify: Reiniciar Prefect
+    content: |
+      [Unit]
+      Description=Prefect Server
+      After=network.target
+
+      [Service]
+      Type=simple
+      User={{ ansible_user }}
+      WorkingDirectory=/home/{{ ansible_user }}
+      Environment="PREFECT_API_URL=http://{{ ansible_host }}:4200/api"
+      ExecStart=/home/{{ ansible_user }}/.venv/bin/prefect server start --host 0.0.0.0
+      Restart=always
+
+      [Install]
+      WantedBy=multi-user.target
+
+- name: Recargar systemd y habilitar Prefect Server
+  become: true
+  systemd:
+    daemon_reload: true
+    name: prefect
+    enabled: true
+    state: started
 
 - name: Verificar configuración de PREFECT_API_URL
   become: false
