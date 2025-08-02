@@ -20,6 +20,8 @@
       After=network.target
 
       [Service]
+      User=debian
+      Group=debian
       Type=simple
       User={{ ansible_user }}
       WorkingDirectory=/home/{{ ansible_user }}
