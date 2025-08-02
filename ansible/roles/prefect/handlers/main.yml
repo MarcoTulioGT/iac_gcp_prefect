@@ -1,0 +1,9 @@
+
+- name: Recargar systemd y habilitar Prefect Server
+  become: true
+  systemd:
+    daemon_reload: true
+    name: prefect
+    enabled: true
+    state: started
+

@@ -3,3 +3,24 @@
     src: /opt/prefect_venv/bin/prefect
     dest: /usr/local/bin/prefect
     state: link
+
+- name: Configurar PREFECT_API_URL
+  shell: |
+    /home/{{ ansible_user }}/.venv/bin/prefect config set PREFECT_API_URL=http://{{ ansible_host }}:4200/api
+  args:
+    executable: /bin/bash
+
+- name: Copiar archivo de servicio
+  copy:
+    src: prefect.service
+    dest: /etc/systemd/system/prefect.service
+  notify: Reiniciar Prefect
+
+- name: Verificar configuración de PREFECT_API_URL
+  become: false
+  shell: |
+    /home/{{ ansible_user }}/.venv/bin/prefect config view | grep PREFECT_API_URL
+  register: api_url_check
+
+- debug:
+    msg: "PREFECT_API_URL está configurado como: {{ api_url_check.stdout }}"
