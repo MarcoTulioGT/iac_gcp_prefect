@@ -24,7 +24,7 @@
       User={{ ansible_user }}
       WorkingDirectory=/home/{{ ansible_user }}
       Environment="PREFECT_API_URL=http://{{ ansible_host }}:4200/api"
-      ExecStart=/home/{{ ansible_user }}/.venv/bin/prefect server start --host 0.0.0.0
+      ExecStart=prefect server start --host 0.0.0.0
       Restart=always
 
       [Install]
@@ -41,7 +41,7 @@
 - name: Verificar configuración de PREFECT_API_URL
   become: false
   shell: |
-    /home/{{ ansible_user }}/.venv/bin/prefect config view | grep PREFECT_API_URL
+    prefect config view | grep PREFECT_API_URL
   register: api_url_check
 
 - debug:
