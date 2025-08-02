@@ -23,11 +23,11 @@
       User=debian
       Group=debian
       Type=simple
-      User={{ ansible_user }}
       WorkingDirectory=/home/{{ ansible_user }}
       Environment="PREFECT_API_URL=http://{{ ansible_host }}:4200/api"
       ExecStart=/opt/prefect_venv/bin/prefect server start --host 0.0.0.0
-      Restart=always
+      Restart=on-failure
+      RestartSec=5s
 
       [Install]
       WantedBy=multi-user.target

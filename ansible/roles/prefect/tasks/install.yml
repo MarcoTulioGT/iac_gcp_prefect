@@ -12,5 +12,12 @@
   args:
     creates: /opt/prefect_venv
 
+- name: Asignar permisos al entorno virtual para el usuario debian
+  file:
+    path: /opt/prefect_venv
+    owner: debian
+    group: debian
+    recurse: yes
+
 - name: Instalar Prefect en virtualenv
   command: /opt/prefect_venv/bin/pip install --upgrade pip prefect
