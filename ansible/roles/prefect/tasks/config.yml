@@ -6,7 +6,7 @@
 
 - name: Configurar PREFECT_API_URL
   shell: |
-    /home/{{ ansible_user }}/.venv/bin/prefect config set PREFECT_API_URL=http://{{ ansible_host }}:4200/api
+    prefect config set PREFECT_API_URL=http://{{ ansible_host }}:4200/api
   args:
     executable: /bin/bash
 
