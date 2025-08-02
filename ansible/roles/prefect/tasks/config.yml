@@ -24,7 +24,7 @@
       User={{ ansible_user }}
       WorkingDirectory=/home/{{ ansible_user }}
       Environment="PREFECT_API_URL=http://{{ ansible_host }}:4200/api"
-      ExecStart=prefect server start --host 0.0.0.0
+      ExecStart=ExecStart=/usr/local/bin/prefect server start --host 0.0.0.0
       Restart=always
 
       [Install]
