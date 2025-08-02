@@ -104,19 +104,19 @@ jobs:
 
       - name: Terraform Format
         run: terraform fmt -recursive
-#        env:
-#          TF_LOG: DEBUG
+        env:
+          TF_LOG: DEBUG
 
       - name: Terraform Plan
         run: terraform plan
-#        env:
-#          TF_LOG: DEBUG
+        env:
+          TF_LOG: DEBUG
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve
-#        env:
-#          TF_LOG: DEBUG
+        env:
+          TF_LOG: DEBUG
 
       - name: Obtener IP pública postgresql
         id: get_ip_postgresql
@@ -134,7 +134,7 @@ jobs:
           echo "La IP pública de Prefect es: $prefect_public_ip"
 
   ansible:
-    name: Ansible Deploy PostgreSQL
+    name: Ansible Deploy Prefect
     runs-on: ubuntu-latest
     needs: [security, terraform]
     environment:
