@@ -11,7 +11,7 @@
     executable: /bin/bash
 
 - name: Iniciar Prefect Server en background (systemd)
-  become: false
+  become: true
   copy:
     dest: /etc/systemd/system/prefect.service
     content: |
@@ -32,14 +32,14 @@
       [Install]
       WantedBy=multi-user.target
 
-#- name: Asegurar permisos correctos del entorno virtual
-#  become: true
-#  file:
-#    path: /home/debian/.venv_prefect
-#    state: directory
-#    recurse: yes
-#    owner: debian
-#    group: debian
+- name: Asegurar permisos correctos del entorno virtual
+  become: true
+  file:
+    path: /home/debian/.venv_prefect
+    state: directory
+    recurse: yes
+    owner: debian
+    group: debian
 
 - name: Recargar systemd y habilitar Prefect Server
   become: false
