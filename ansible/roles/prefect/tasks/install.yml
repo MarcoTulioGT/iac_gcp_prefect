@@ -8,16 +8,16 @@
     update_cache: yes
 
 - name: Crear virtualenv para Prefect
-  command: python3 -m venv /opt/prefect_venv
+  command: python3 -m venv /home/debian/.venv_prefect
   args:
-    creates: /opt/prefect_venv
+    creates: /home/debian/.venv_prefect
 
 - name: Asignar permisos al entorno virtual para el usuario debian
   file:
-    path: /opt/prefect_venv
+    path: /home/debian/.venv_prefect
     owner: debian
     group: debian
     recurse: yes
 
 - name: Instalar Prefect en virtualenv
-  command: /opt/prefect_venv/bin/pip install --upgrade pip prefect
+  command: /home/debian/.venv_prefect/bin/pip install --upgrade pip prefect

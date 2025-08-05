@@ -1,6 +1,6 @@
 - name: Crear symlink para Prefect CLI
   file:
-    src: /opt/prefect_venv/bin/prefect
+    src: /home/debian/.venv_prefect/bin/prefect
     dest: /usr/local/bin/prefect
     state: link
 
@@ -25,7 +25,7 @@
       Type=simple
       WorkingDirectory=/home/{{ ansible_user }}
       Environment="PREFECT_API_URL=http://{{ ansible_host }}:4200/api"
-      ExecStart=/opt/prefect_venv/bin/prefect server start --host 0.0.0.0
+      ExecStart=/home/debian/.venv_prefect/bin/prefect server start --host 0.0.0.0
       Restart=on-failure
       RestartSec=5s
 
