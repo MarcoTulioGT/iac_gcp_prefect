@@ -1,12 +1,13 @@
-- name: Crear estructura de proyecto Prefect
-  file:
-    path: "/home/debian/prefect_project/{{ item }}"
-    state: directory
+- name: Copiar directorio de Prefect
+  copy:
+    src: /iac_gcp_prefect/prefect/
+    dest: "{{ project_path }}/"
+    owner: debian
+    group: debian
     mode: '0755'
-  with_items:
-    - ""
-    - "flows"
-    - "deployments"
+    directory_mode: '0755'
+
+
 
 - name: Construir deployment YAML
   shell: |
