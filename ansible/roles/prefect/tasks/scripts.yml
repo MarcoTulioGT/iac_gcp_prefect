@@ -7,19 +7,6 @@
     mode: '0755'
     directory_mode: '0755'
 
-
-
-- name: Construir deployment YAML
-  shell: |
-    source {{ venv_path }}/bin/activate
-    cd {{ project_path }}
-    prefect deployment build {{ flow_script }}:{{ flow_name }} \
-      -n {{ deployment_name }} \
-      -q {{ work_pool }} \
-      --apply
-  args:
-    executable: /bin/bash
-
 - name: Aplicar deployment YAML de Prefect
   shell: |
     source {{ venv_path }}/bin/activate
