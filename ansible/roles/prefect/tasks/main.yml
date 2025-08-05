@@ -3,3 +3,6 @@
 
 - name: Configurar Prefect
   import_tasks: config.yml
+
+- name: Configurar Prefect Worker
+  import_tasks: worker.yml
