@@ -1,0 +1,20 @@
+- name: Crear estructura de proyecto Prefect
+  file:
+    path: "/home/debian/prefect_project/{{ item }}"
+    state: directory
+    mode: '0755'
+  with_items:
+    - ""
+    - "flows"
+    - "deployments"
+
+- name: Construir deployment YAML
+  shell: |
+    source {{ venv_path }}/bin/activate
+    cd {{ project_path }}
+    prefect deployment build {{ flow_script }}:{{ flow_name }} \
+      -n {{ deployment_name }} \
+      -q {{ work_pool }} \
+      --apply
+  args:
+    executable: /bin/bash

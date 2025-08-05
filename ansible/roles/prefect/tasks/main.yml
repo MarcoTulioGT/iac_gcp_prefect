@@ -6,3 +6,6 @@
 
 - name: Configurar Prefect Worker
   import_tasks: worker.yml
+
+- name: Desplegar deployment Prefect Worker
+  import_tasks: scripts.yml

@@ -1,2 +1,7 @@
 prefect_version: ">=2.0"
-prefect_venv_path: /opt/prefect_venv
+venv_path: "/home/debian/.venv_prefect"
+project_path: "/home/debian/prefect_project"
+flow_script: "flows/hello_flow.py"
+flow_name: "hello_world"
+deployment_name: "hello-deploy"
+work_pool: "default-agent-pool"
