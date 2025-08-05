@@ -37,7 +37,7 @@ module "postgresql" {
 module "prefect" {
   source             = "../../modules/prefect"
   instance_name      = "prefect-instance-dev"
-  machine_type       = "f1-micro"
+  machine_type       = "e2-micro"
   environment        = "dev"
   project            = var.project
   region             = var.region
