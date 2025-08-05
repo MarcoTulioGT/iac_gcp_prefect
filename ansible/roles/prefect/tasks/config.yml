@@ -11,7 +11,7 @@
     executable: /bin/bash
 
 - name: Iniciar Prefect Server en background (systemd)
-  become: true
+  become: false
   copy:
     dest: /etc/systemd/system/prefect.service
     content: |
@@ -32,28 +32,30 @@
       [Install]
       WantedBy=multi-user.target
 
-- name: Asegurar permisos correctos del entorno virtual
-  become: true
-  file:
-    path: /home/debian/.venv_prefect
-    state: directory
-    recurse: yes
-    owner: debian
-    group: debian
+#- name: Asegurar permisos correctos del entorno virtual
+#  become: true
+#  file:
+#    path: /home/debian/.venv_prefect
+#    state: directory
+#    recurse: yes
+#    owner: debian
+#    group: debian
 
 - name: Recargar systemd y habilitar Prefect Server
-  become: true
+  become: false
   systemd:
     daemon_reload: true
     name: prefect
     enabled: true
     state: started
 
-- name: Verificar configuración de PREFECT_API_URL
-  become: false
+- name: Ver solo PREFECT_API_URL desde systemd service
   shell: |
-    prefect config view | grep PREFECT_API_URL
-  register: api_url_check
+    systemctl show -p Environment prefect | grep PREFECT_API_URL
+  register: api_env_check
 
 - debug:
-    msg: "PREFECT_API_URL está configurado como: {{ api_url_check.stdout }}"
+    msg: "Valor desde service file: {{ api_env_check.stdout }}"
+
+
+#sudo journalctl -u prefect.service -f
