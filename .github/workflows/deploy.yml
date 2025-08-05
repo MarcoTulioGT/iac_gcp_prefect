@@ -148,6 +148,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Definir variable para ruta del proyecto
+        run: echo "PROJECT_PATH=$GITHUB_WORKSPACE/prefect" >> $GITHUB_ENV
+
       - name: Agregar SSH private key correctamente
         run: |
           mkdir -p ~/.ssh

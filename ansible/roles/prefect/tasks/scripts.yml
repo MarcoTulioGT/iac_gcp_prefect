@@ -1,6 +1,6 @@
 - name: Copiar directorio de Prefect
   copy:
-    src: /iac_gcp_prefect/prefect/
+    src: "{{ lookup('env', 'PROJECT_PATH') }}/"
     dest: "{{ project_path }}/"
     owner: debian
     group: debian
