@@ -19,3 +19,10 @@
       --apply
   args:
     executable: /bin/bash
+
+- name: Aplicar deployment YAML de Prefect
+  shell: |
+    source {{ venv_path }}/bin/activate
+    prefect deployments apply {{ project_path }}/deployments/hello_deploy.yaml
+  args:
+    executable: /bin/bash

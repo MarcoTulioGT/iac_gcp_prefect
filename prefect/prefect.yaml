@@ -1,0 +1,3 @@
+name: prefect_project
+prefect-version: 3.4.11
+entrypoint: flows/hello_flow.py:hello_world
