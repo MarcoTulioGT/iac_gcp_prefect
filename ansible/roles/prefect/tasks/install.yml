@@ -44,7 +44,7 @@
     path: /var/run/docker.sock
     owner: root
     group: docker
-    mode: '0660'
+    mode: '777'
 
 - name: Asegurar que el servicio Docker está iniciado y habilitado
   service:
