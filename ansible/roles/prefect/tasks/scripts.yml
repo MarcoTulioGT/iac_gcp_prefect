@@ -7,6 +7,21 @@
     mode: '0755'
     directory_mode: '0755'
 
+- name: Configurar PREFECT_API_URL
+  shell: |
+    source /home/debian/.venv_prefect/bin/activate
+    prefect config set PREFECT_API_URL=http://{{ ansible_host }}:4200/api
+  args:
+    executable: /bin/bash
+
+- name: Validar PREFECT_API_URL y configuración de Prefect
+  shell: |
+    source /home/debian/.venv_prefect/bin/activate
+    prefect config view
+  args:
+    executable: /bin/bash
+  register: prefect_config
+
 - name: Ejecutar flujo Prefect 3 con serve()
   ansible.builtin.shell: |
     source /home/debian/.venv_prefect/bin/activate
