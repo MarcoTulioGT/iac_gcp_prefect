@@ -26,6 +26,7 @@
     PREFECT_API_URL: "http://{{ ansible_host }}:4200/api"
   shell: |
     source /home/debian/.venv_prefect/bin/activate
+    prefect config set PREFECT_API_URL=http://{{ ansible_host }}:4200/api
     prefect work-pool create \
       --type docker \
       default-docker-pool
@@ -34,8 +35,8 @@
   register: create_pool_result
   retries: 5
   delay: 5
-  until: create_pool.rc == 0 or "'already exists'" in create_pool.stderr
-  failed_when: create_pool.rc != 0 and "'already exists'" not in create_pool.stderr
+  until: create_pool_result is succeeded or "'already exists'" in create_pool_result.stderr
+  failed_when: create_pool_result.rc != 0 and "'already exists'" not in create_pool_result.stderr
 
 
 
