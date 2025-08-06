@@ -28,7 +28,6 @@
     source /home/debian/.venv_prefect/bin/activate
     prefect work-pool create \
       --type docker \
-      --description "Pool de ejecución con Docker" \
       --pause false \
       default-docker-pool
   args:
