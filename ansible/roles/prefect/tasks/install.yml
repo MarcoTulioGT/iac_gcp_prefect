@@ -32,17 +32,25 @@
     state: present
     update_cache: yes
 
-- name: Asegurar que el servicio Docker está iniciado y habilitado
-  service:
-    name: docker
-    state: started
-    enabled: true
-
 - name: Agregar al usuario 'debian' al grupo docker
   user:
     name: debian
     groups: docker
     append: yes
+
+
+- name: Establecer permisos correctos del socket de Docker
+  file:
+    path: /var/run/docker.sock
+    owner: root
+    group: docker
+    mode: '0660'
+
+- name: Asegurar que el servicio Docker está iniciado y habilitado
+  service:
+    name: docker
+    state: started
+    enabled: true
 
 - name: Esperar 2 segundos para que Docker reinicie correctamente
   pause:
