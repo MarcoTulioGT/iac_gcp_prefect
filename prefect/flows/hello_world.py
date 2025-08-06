@@ -1,27 +1,15 @@
-from prefect import flow, task
-import random
+from prefect import flow
 
-@task
-def get_customer_ids() -> list[str]:
-    # Fetch customer IDs from a database or API
-    return [f"customer{n}" for n in random.choices(range(100), k=10)]
 
-@task
-def process_customer(customer_id: str) -> str:
-    # Process a single customer
-    return f"Processed {customer_id}"
-
-@flow
-def main() -> list[str]:
-    customer_ids = get_customer_ids()
-    # Map the process_customer task across all customer IDs
-    results = process_customer.map(customer_ids)
-    return results
+@flow(log_prints=True)
+def my_flow(name: str = "world"):
+    print(f"Hello, {name}!")
 
 
 if __name__ == "__main__":
-    main.deploy(
-        name="hello-deployment",
-        work_pool_name="default-agent-pool",
-        tags=["dev"]
+    my_flow.deploy(
+        name="my-deployment",
+        work_pool_name="default-docker-pool",
+        image="my-registry.com/my-docker-image:my-tag",
+        push=False # switch to True to push to your image registry
     )

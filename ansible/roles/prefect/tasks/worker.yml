@@ -19,6 +19,25 @@
       [Install]
       WantedBy=multi-user.target
 
+- name: Crear Docker Work Pool en Prefect
+  become: false
+  environment:
+    PATH: "/home/debian/.venv_prefect/bin:{{ ansible_env.PATH }}"
+    PREFECT_API_URL: "http://{{ ansible_host }}:4200/api"
+  shell: |
+    source /home/debian/.venv_prefect/bin/activate
+    prefect work-pool create \
+      --type docker \
+      --name default-docker-pool \
+      --description "Pool de ejecución con Docker" \
+      --pause false
+  args:
+    executable: /bin/bash
+  register: create_pool_result
+  changed_when: "'already exists' not in create_pool_result.stderr"
+  failed_when: create_pool_result.rc != 0 and "'already exists'" not in create_pool_result.stderr
+
+
 - name: Recargar systemd y habilitar Prefect Worker
   systemd:
     daemon_reload: true

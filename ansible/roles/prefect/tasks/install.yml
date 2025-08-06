@@ -23,6 +23,7 @@
   shell: |
     source /home/debian/.venv_prefect/bin/activate && \
     pip install --upgrade pip && \
+    pip install prefect-docker && \
     pip install prefect[dev]
   args:
     executable: /bin/bash

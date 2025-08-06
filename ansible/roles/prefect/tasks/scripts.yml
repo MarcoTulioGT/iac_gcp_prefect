@@ -25,8 +25,9 @@
 - name: Ejecutar flujo Prefect 3 con serve()
   ansible.builtin.shell: |
     source /home/debian/.venv_prefect/bin/activate
-    cd /home/debian/prefect_project
-    python3 flows/hello_flow.py
+    prefect config set PREFECT_API_URL=http://{{ ansible_host }}:4200/api
+    cd /home/debian/prefect_project/flows
+    python3 hello_flow.py
   args:
     executable: /bin/bash
   register: flow_output
