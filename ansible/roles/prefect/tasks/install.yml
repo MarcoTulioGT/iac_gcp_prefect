@@ -23,7 +23,7 @@
   shell: |
     source /home/debian/.venv_prefect/bin/activate && \
     pip install --upgrade pip && \
-    pip install "prefect==2.13.5"
+    pip install "prefect[dev]==2.13.5"
   args:
     executable: /bin/bash
 
