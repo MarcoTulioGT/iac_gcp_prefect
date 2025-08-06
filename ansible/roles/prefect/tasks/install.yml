@@ -4,8 +4,49 @@
       - python3
       - python3-pip
       - python3-venv
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
     state: present
     update_cache: yes
+
+- name: Agregar GPG key oficial de Docker
+  apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+    state: present
+
+- name: Agregar repositorio Docker
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
+    state: present
+    filename: docker
+
+- name: Actualizar apt e instalar Docker
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    state: present
+    update_cache: yes
+
+- name: Asegurar que el servicio Docker está iniciado y habilitado
+  service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: Agregar al usuario 'debian' al grupo docker
+  user:
+    name: debian
+    groups: docker
+    append: yes
+
+- name: Esperar 2 segundos para que Docker reinicie correctamente
+  pause:
+    seconds: 2
 
 - name: Crear virtualenv para Prefect
   command: python3 -m venv /home/debian/.venv_prefect
