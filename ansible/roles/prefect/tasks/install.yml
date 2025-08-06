@@ -1,14 +1,14 @@
 - name: Instalar dependencias de Python
   apt:
     name:
-      - python3
-      - python3-pip
-      - python3-venv
+      - python3.10
+      - python3.10-pip
+      - python3.10-venv
     state: present
     update_cache: yes
 
-- name: Crear virtualenv para Prefect
-  command: python3 -m venv /home/debian/.venv_prefect
+- name: Crear virtualenv para Prefect 3.10
+  command: python3.10 -m venv /home/debian/.venv_prefect
   args:
     creates: /home/debian/.venv_prefect
 
@@ -19,13 +19,14 @@
     group: debian
     recurse: yes
 
-- name: Instalar Prefect en virtualenv
+- name: Instalar Prefect con todas sus dependencias
   shell: |
     source /home/debian/.venv_prefect/bin/activate && \
     pip install --upgrade pip && \
-    pip install prefect==2.13.5 griffe
+    pip install "prefect[dev]==2.13.5"
   args:
     executable: /bin/bash
+
 
 
 - name: Verificar instalación de Prefect
