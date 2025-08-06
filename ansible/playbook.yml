@@ -1,10 +1,10 @@
-- name: Aprovisionar servidor PostgreSQL
-  hosts: postgresql
-  become: true
-  vars:
-    ansible_user: debian
-  roles:
-    - postgresql
+#- name: Aprovisionar servidor PostgreSQL
+#  hosts: postgresql
+#  become: true
+#  vars:
+#    ansible_user: debian
+#  roles:
+#    - postgresql
 
 
 - name: Instalar Prefect
