@@ -20,5 +20,12 @@
     recurse: yes
 
 - name: Instalar Prefect en virtualenv
-  command: /home/debian/.venv_prefect/bin/pip install --upgrade pip prefect=={{ prefect_version }}
- 
+  command: >
+    /home/debian/.venv_prefect/bin/pip install --upgrade pip &&
+    /home/debian/.venv_prefect/bin/pip install "prefect==2.13.5"
+
+- name: Verificar instalación de Prefect
+  command: /home/debian/.venv_prefect/bin/prefect version
+  register: prefect_version
+- debug:
+    msg: "Prefect version instalada: {{ prefect_version.stdout }}"
