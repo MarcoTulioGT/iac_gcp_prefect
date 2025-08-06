@@ -1,4 +1,4 @@
-prefect_version: ">=2.0"
+prefect_version: "2.13.5"
 venv_path: "/home/debian/.venv_prefect"
 project_path: "/home/debian/prefect_project"
 flow_script: "flows/hello_flow.py"
