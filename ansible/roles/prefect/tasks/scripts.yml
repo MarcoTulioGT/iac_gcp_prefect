@@ -7,9 +7,15 @@
     mode: '0755'
     directory_mode: '0755'
 
-- name: Aplicar deployment YAML de Prefect
-  shell: |
-    source {{ venv_path }}/bin/activate
-    prefect deployments apply {{ project_path }}/deployments/hello_deploy.yaml
+- name: Ejecutar flujo Prefect 3 con serve()
+  ansible.builtin.shell: |
+    source /home/debian/.venv_prefect/bin/activate
+    cd /home/debian/prefect_project
+    python3 flows/hello_flow.py
   args:
     executable: /bin/bash
+  register: flow_output
+
+- name: Mostrar resultado
+  ansible.builtin.debug:
+    var: flow_output.stdout_lines

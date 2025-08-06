@@ -10,6 +10,12 @@
   args:
     executable: /bin/bash
 
+- name: validar PREFECT_API_URL
+  shell: |
+    prefect config view
+  args:
+    executable: /bin/bash
+
 - name: Iniciar Prefect Server en background (systemd)
   become: true
   copy:
