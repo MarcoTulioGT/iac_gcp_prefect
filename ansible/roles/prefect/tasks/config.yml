@@ -6,15 +6,23 @@
 
 - name: Configurar PREFECT_API_URL
   shell: |
+    source /home/debian/.venv_prefect/bin/activate
     prefect config set PREFECT_API_URL=http://{{ ansible_host }}:4200/api
   args:
     executable: /bin/bash
 
-- name: validar PREFECT_API_URL
+- name: Validar PREFECT_API_URL y configuración de Prefect
   shell: |
+    source /home/debian/.venv_prefect/bin/activate
     prefect config view
   args:
     executable: /bin/bash
+  register: prefect_config
+
+- name: Mostrar configuración de Prefect
+  debug:
+    var: prefect_config.stdout_lines
+
 
 - name: Iniciar Prefect Server en background (systemd)
   become: true
