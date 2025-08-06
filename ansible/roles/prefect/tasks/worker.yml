@@ -1,23 +1,23 @@
-- name: Crear servicio systemd para Prefect Worker
-  copy:
-    dest: /etc/systemd/system/prefect-worker.service
-    content: |
-      [Unit]
-      Description=Prefect Worker
-      After=network.target
+#- name: Crear servicio systemd para Prefect Worker
+#  copy:
+#    dest: /etc/systemd/system/prefect-worker.service
+#    content: |
+#      [Unit]
+#      Description=Prefect Worker
+#      After=network.target
 
-      [Service]
-      Type=simple
-      User=debian
-      Group=debian
-      WorkingDirectory=/home/debian
-      Environment="PREFECT_API_URL=http://{{ ansible_host }}:4200/api"
-      ExecStart=/home/debian/.venv_prefect/bin/prefect worker start -p default-agent-pool
-      Restart=always
-      RestartSec=5s
+#      [Service]
+#      Type=simple
+#      User=debian
+#      Group=debian
+#      WorkingDirectory=/home/debian
+#      Environment="PREFECT_API_URL=http://{{ ansible_host }}:4200/api"
+#      ExecStart=/home/debian/.venv_prefect/bin/prefect worker start -p default-agent-pool
+#      Restart=always
+#      RestartSec=5s
 
-      [Install]
-      WantedBy=multi-user.target
+#      [Install]
+#      WantedBy=multi-user.target
 
 - name: Crear Docker Work Pool en Prefect
   become: false
@@ -28,9 +28,9 @@
     source /home/debian/.venv_prefect/bin/activate
     prefect work-pool create \
       --type docker \
-      --name default-docker-pool \
       --description "Pool de ejecución con Docker" \
-      --pause false
+      --pause false \
+      default-docker-pool
   args:
     executable: /bin/bash
   register: create_pool_result
@@ -38,9 +38,41 @@
   failed_when: create_pool_result.rc != 0 and "'already exists'" not in create_pool_result.stderr
 
 
-- name: Recargar systemd y habilitar Prefect Worker
-  systemd:
-    daemon_reload: true
-    name: prefect-worker
-    enabled: true
-    state: started
+
+#- name: Recargar systemd y habilitar Prefect Worker
+#  systemd:
+#    daemon_reload: true
+#    name: prefect-worker
+#    enabled: true
+#    state: started
+
+- name: Inspeccionar Work Pool en Prefect
+  become: false
+  environment:
+    PATH: "/home/debian/.venv_prefect/bin:{{ ansible_env.PATH }}"
+    PREFECT_API_URL: "http://{{ ansible_host }}:4200/api"
+  shell: |
+    source /home/debian/.venv_prefect/bin/activate
+    prefect work-pool inspect default-docker-pool
+  args:
+    executable: /bin/bash
+  register: pool_inspect
+
+- name: Mostrar información del pool
+  debug:
+    var: pool_inspect.stdout_lines
+
+
+- name: Iniciar Worker Docker para el Work Pool
+  become: false
+  environment:
+    PATH: "/home/debian/.venv_prefect/bin:{{ ansible_env.PATH }}"
+    PREFECT_API_URL: "http://{{ ansible_host }}:4200/api"
+  shell: |
+    source /home/debian/.venv_prefect/bin/activate
+    prefect worker start --pool default-docker-pool --name docker-worker-1
+  args:
+    executable: /bin/bash
+  async: 3600
+  poll: 0
+  register: worker_start
