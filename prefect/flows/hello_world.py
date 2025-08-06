@@ -20,4 +20,8 @@ def main() -> list[str]:
 
 
 if __name__ == "__main__":
-    main.serve(name="my-first-deployment")
+    main.deploy(
+        name="hello-deployment",
+        work_pool_name="default-agent-pool",
+        tags=["dev"]
+    )
