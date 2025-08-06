@@ -23,7 +23,7 @@
   shell: |
     source /home/debian/.venv_prefect/bin/activate && \
     pip install --upgrade pip && \
-    pip install "prefect[dev]==2.13.5"
+    pip install prefect[dev]
   args:
     executable: /bin/bash
 
@@ -39,9 +39,3 @@
 - debug:
     msg: "Prefect instalado: {{ prefect_version.stdout }}"
 
-- name: Instalar dependencia faltante griffe
-  shell: |
-    source /home/debian/.venv_prefect/bin/activate && \
-    pip install griffe
-  args:
-    executable: /bin/bash
