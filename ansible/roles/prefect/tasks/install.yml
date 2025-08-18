@@ -74,7 +74,7 @@
     pip install --upgrade pip && \
     pip install prefect-docker && \
     pip install prefect[dev] && \
-    pip install psycopg2
+    pip install psycopg2-binary
   args:
     executable: /bin/bash
 
