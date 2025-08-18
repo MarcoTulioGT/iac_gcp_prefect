@@ -1,9 +1,27 @@
-from prefect import flow
+from prefect import flow, task
+import psycopg2
 
+@task
+def query_postgres():
+    conn = psycopg2.connect(
+        host="localhost",       # o IP de tu servidor
+        database="test_db",
+        user="test_user",
+        password="testuser25",
+        port=5432
+    )
+    cur = conn.cursor()
+    cur.execute("SELECT nombre, salario, correo_electronico, dpi, fecha_contratacion FROM empleados LIMIT 5;")
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+    return rows
 
 @flow(log_prints=True)
 def my_flow(name: str = "world"):
     print(f"Hello, {name}!")
+    resultados = query_postgres()
+    print("Resultados:", resultados)
 
 
 if __name__ == "__main__":
