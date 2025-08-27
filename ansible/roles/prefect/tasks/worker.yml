@@ -46,14 +46,6 @@
   failed_when: create_pool_result.rc != 0 and "'already exists'" not in create_pool_result.stderr
 
 
-
-#- name: Recargar systemd y habilitar Prefect Worker
-#  systemd:
-#    daemon_reload: true
-#    name: prefect-worker
-#    enabled: true
-#    state: started
-
 - name: Inspeccionar Work Pool en Prefect
   become: false
   environment:
@@ -81,6 +73,11 @@
     prefect worker start --pool default-docker-pool --name docker-worker-1
   args:
     executable: /bin/bash
+  environment:
+    DB_HOST: "{{ ansible_host }}"
+    DB_USER: "test_user"
+    DB_PASSWORD: "testuser25"
+    DB_NAME: "test_db"
   async: 3600
   poll: 0
   register: worker_start
