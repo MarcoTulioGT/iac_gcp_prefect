@@ -35,8 +35,7 @@
     prefect config set PREFECT_API_URL=http://{{ ansible_host }}:4200/api
     prefect work-pool create \
       --type docker \
-      default-docker-pool \
-      --extra-hosts database_postgres:{{ ansible_host }}
+      default-docker-pool 
   args:
     executable: /bin/bash
   register: create_pool_result
