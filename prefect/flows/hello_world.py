@@ -9,7 +9,7 @@ DB_HOST = postgres_host.get()
 @task
 def query_postgres():
     conn = psycopg2.connect(
-        host=DB_HOST,   
+        host="database_postgres",   
         database="test_db",
         user="test_user",
         password="testuser25",
