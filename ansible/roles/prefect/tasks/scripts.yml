@@ -27,6 +27,7 @@
     source /home/debian/.venv_prefect/bin/activate
     prefect config set PREFECT_API_URL=http://{{ ansible_host }}:4200/api
     cd /home/debian/prefect_project/flows
+    pip install -r requirements.txt
     python3 hello_world.py
   args:
     executable: /bin/bash
