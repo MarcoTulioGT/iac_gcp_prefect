@@ -1,10 +1,15 @@
 from prefect import flow, task
+from prefect.blocks.system import Secret
 import psycopg2
+
+postgres_host = Secret.load("postgres-host")
+
+DB_HOST = postgres_host.get()
 
 @task
 def query_postgres():
     conn = psycopg2.connect(
-        host="localhost",       # o IP de tu servidor
+        host=DB_HOST,   
         database="test_db",
         user="test_user",
         password="testuser25",
@@ -29,5 +34,5 @@ if __name__ == "__main__":
         name="my-deployment",
         work_pool_name="default-docker-pool",
         image="my-registry.com/my-docker-image:my-tag",
-        push=False # switch to True to push to your image registry
+        push=False 
     )

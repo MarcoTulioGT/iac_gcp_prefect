@@ -22,12 +22,21 @@
     executable: /bin/bash
   register: prefect_config
 
+- name: Registrar IP de PostgreSQL en Prefect Block
+  shell: |
+    source /home/debian/.venv_prefect/bin/activate
+    prefect block register -m prefect.blocks.system
+    prefect block put secret postgres-host --value "{{ ansible_host }}"
+  args:
+    executable: /bin/bash
+
+
 - name: Ejecutar flujo Prefect 3 
   ansible.builtin.shell: |
     source /home/debian/.venv_prefect/bin/activate
     prefect config set PREFECT_API_URL=http://{{ ansible_host }}:4200/api
     cd /home/debian/prefect_project/flows
-    pip install -r requirements.txt
+    pip3 install -r requirements.txt
     python3 hello_world.py
   args:
     executable: /bin/bash
