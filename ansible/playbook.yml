@@ -19,8 +19,7 @@
 - name: Instalar Prefect
   hosts: prefect
   become: true
+  vars:
+    postgres_ip: "{{ hostvars['prefect-hosts']['postgres_ip'] }}"
   roles:
     - prefect
-  vars:
-  # Obtener IP del host agregado
-  postgres_ip: "{{ hostvars['prefect-hosts']['postgres_ip'] }}"
