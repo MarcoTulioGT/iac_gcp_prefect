@@ -73,7 +73,7 @@
   args:
     executable: /bin/bash
   environment:
-    DB_HOST: "{{ postgresql_listen_addresses }}"
+    DB_HOST: "{{ postgres_ip }}"
     DB_USER: "test_user"
     DB_PASSWORD: "testuser25"
     DB_NAME: "test_db"
