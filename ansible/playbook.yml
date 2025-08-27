@@ -5,6 +5,15 @@
     ansible_user: debian
   roles:
     - postgresql
+  tasks:
+- name: Guardar IP de PostgreSQL
+  command: terraform output -raw postgresql_public_ip
+  register: pg_ip_output
+
+- name: Hacer disponible la IP para otros hosts
+  add_host:
+    name: prefect-hosts
+    postgres_ip: "{{ pg_ip_output.stdout }}"
 
 
 - name: Instalar Prefect
@@ -12,3 +21,6 @@
   become: true
   roles:
     - prefect
+  vars:
+  # Obtener IP del host agregado
+  postgres_ip: "{{ hostvars['prefect-hosts']['postgres_ip'] }}"
