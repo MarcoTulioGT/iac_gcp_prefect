@@ -6,14 +6,14 @@
   roles:
     - postgresql
   tasks:
-- name: Guardar IP de PostgreSQL
-  command: terraform output -raw postgresql_public_ip
-  register: pg_ip_output
+    - name: Guardar IP de PostgreSQL
+      command: terraform output -raw postgresql_public_ip
+      register: pg_ip_output
 
-- name: Hacer disponible la IP para otros hosts
-  add_host:
-    name: prefect-hosts
-    postgres_ip: "{{ pg_ip_output.stdout }}"
+    - name: Hacer disponible la IP para otros hosts
+      add_host:
+        name: prefect-hosts
+        postgres_ip: "{{ pg_ip_output.stdout }}"
 
 
 - name: Instalar Prefect
