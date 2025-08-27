@@ -19,6 +19,12 @@
 #      [Install]
 #      WantedBy=multi-user.target
 
+- name: Asegurar que la IP y hostname estén en /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ ansible_host }} database_postgres"
+    state: present
+
 - name: Crear Docker Work Pool en Prefect
   become: false
   environment:
@@ -29,7 +35,8 @@
     prefect config set PREFECT_API_URL=http://{{ ansible_host }}:4200/api
     prefect work-pool create \
       --type docker \
-      default-docker-pool
+      default-docker-pool \
+      --extra-hosts database_postgres:{{ ansible_host }}
   args:
     executable: /bin/bash
   register: create_pool_result

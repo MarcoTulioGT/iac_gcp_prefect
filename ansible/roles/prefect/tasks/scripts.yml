@@ -22,12 +22,6 @@
     executable: /bin/bash
   register: prefect_config
 
-- name: Asegurar que la IP y hostname estén en /etc/hosts
-  lineinfile:
-    path: /etc/hosts
-    line: "{{ ansible_host }} database_postgres"
-    state: present
-
 - name: Ejecutar flujo Prefect 3 
   ansible.builtin.shell: |
     source /home/debian/.venv_prefect/bin/activate
