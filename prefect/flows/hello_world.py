@@ -1,15 +1,12 @@
 from prefect import flow, task
-from prefect.blocks.system import Secret
 import psycopg2
-
-postgres_host = Secret.load("postgres-host")
-
-DB_HOST = postgres_host.get()
+import socket
+host_ip = socket.gethostbyname("database_postgres")
 
 @task
 def query_postgres():
     conn = psycopg2.connect(
-        host="database_postgres",   
+        host=host_ip,   
         database="test_db",
         user="test_user",
         password="testuser25",
