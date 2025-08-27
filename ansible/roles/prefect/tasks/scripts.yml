@@ -22,15 +22,11 @@
     executable: /bin/bash
   register: prefect_config
 
-- name: Agregar host dinámico al /etc/hosts
-  hosts: all
-  become: yes
-  tasks:
-    - name: Asegurar que la IP y hostname estén en /etc/hosts
-      lineinfile:
-        path: /etc/hosts
-        line: "{{ ansible_host }} database_postgres"
-        state: present
+- name: Asegurar que la IP y hostname estén en /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ ansible_host }} database_postgres"
+    state: present
 
 - name: Ejecutar flujo Prefect 3 
   ansible.builtin.shell: |
