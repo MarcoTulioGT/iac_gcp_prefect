@@ -2,6 +2,10 @@
   debug:
     msg: "Versión de PostgreSQL: {{ postgresql_version }}"
 
+- name: Guardar IP como variable global de play
+  set_fact:
+    postgres_ip: "{{ postgresql_listen_addresses}}"
+
 - name: Instalar PostgreSQL y dependencias
   import_tasks: install.yml
 

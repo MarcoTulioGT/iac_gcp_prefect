@@ -1,4 +1,4 @@
-- name: Aprovisionar servidor PostgreSQL
+- name: Instalar PostgreSQL
   hosts: postgresql
   become: true
   vars:
