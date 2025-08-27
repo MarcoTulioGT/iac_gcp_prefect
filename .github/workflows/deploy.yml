@@ -206,4 +206,4 @@ jobs:
          cat roles/prefect/tasks/main.yml
 
       - name: Ejecutar playbook Ansible
-        run: ansible-playbook -i inventory.ini playbook.yml
+        run: ansible-playbook -i inventory.ini playbook.yml -e "postgres_ip=${{ needs.terraform.outputs.postgresql_ip }}"
