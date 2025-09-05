@@ -3,7 +3,6 @@ import psycopg2
 import os
 
 db_host = os.environ.get("DB_HOST")
-print(f"Host: {db_host}")
 @task
 def query_postgres():
     conn = psycopg2.connect(
@@ -23,6 +22,7 @@ def query_postgres():
 @flow(log_prints=True)
 def my_flow(name: str = "world"):
     print(f"Hello, {name}!")
+    print(f"Host: {db_host}")
     resultados = query_postgres()
     print("Resultados:", resultados)
 

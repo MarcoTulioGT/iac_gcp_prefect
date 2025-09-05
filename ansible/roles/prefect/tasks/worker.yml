@@ -61,6 +61,9 @@
   debug:
     var: pool_inspect.stdout_lines
 
+- name: Mostrar postgres_ip con variable
+  debug:
+    msg: "El valor es: {{ postgres_ip }}"
 
 - name: Iniciar Worker Docker para el Work Pool
   become: false
