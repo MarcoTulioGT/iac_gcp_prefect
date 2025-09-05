@@ -2,9 +2,11 @@ from prefect import flow, task
 import psycopg2
 import os
 
-db_host = os.environ.get("DB_HOST")
+
 @task
 def query_postgres():
+    db_host = os.environ.get("DB_HOST")
+    print(f"Host: {db_host}")
     conn = psycopg2.connect(
         host=db_host,
         database="test_db",
@@ -22,7 +24,6 @@ def query_postgres():
 @flow(log_prints=True)
 def my_flow(name: str = "world"):
     print(f"Hello, {name}!")
-    print(f"Host: {db_host}")
     resultados = query_postgres()
     print("Resultados:", resultados)
 

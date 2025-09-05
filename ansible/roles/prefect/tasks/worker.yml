@@ -67,15 +67,14 @@
 
 - name: Iniciar Worker Docker para el Work Pool
   become: false
-  environment:
-    PATH: "/home/debian/.venv_prefect/bin:{{ ansible_env.PATH }}"
-    PREFECT_API_URL: "http://{{ ansible_host }}:4200/api"
   shell: |
     source /home/debian/.venv_prefect/bin/activate
     prefect worker start --pool default-docker-pool --name docker-worker-1
   args:
     executable: /bin/bash
   environment:
+    PATH: "/home/debian/.venv_prefect/bin:{{ ansible_env.PATH }}"
+    PREFECT_API_URL: "http://{{ ansible_host }}:4200/api"
     DB_HOST: "{{ postgres_ip }}"
     DB_USER: "test_user"
     DB_PASSWORD: "testuser25"
