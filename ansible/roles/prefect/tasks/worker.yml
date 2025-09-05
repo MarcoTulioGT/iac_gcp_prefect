@@ -1,24 +1,3 @@
-#- name: Crear servicio systemd para Prefect Worker
-#  copy:
-#    dest: /etc/systemd/system/prefect-worker.service
-#    content: |
-#      [Unit]
-#      Description=Prefect Worker
-#      After=network.target
-
-#      [Service]
-#      Type=simple
-#      User=debian
-#      Group=debian
-#      WorkingDirectory=/home/debian
-#      Environment="PREFECT_API_URL=http://{{ ansible_host }}:4200/api"
-#      ExecStart=/home/debian/.venv_prefect/bin/prefect worker start -p default-agent-pool
-#      Restart=always
-#      RestartSec=5s
-
-#      [Install]
-#      WantedBy=multi-user.target
-
 - name: Asegurar que la IP y hostname estén en /etc/hosts
   lineinfile:
     path: /etc/hosts

@@ -1,0 +1,20 @@
+- name: Crear local worker pool
+  shell: |
+    source /home/debian/.venv_prefect/bin/activate
+    prefect work-pool create --type process default-local-pool
+  args:
+    executable: /bin/bash
+
+
+- name: Iniciar worker local
+  shell: |
+    source /home/debian/.venv_prefect/bin/activate
+    prefect worker start --pool default-local-pool --name local-worker
+  args:
+    executable: /bin/bash
+  environment:
+    PREFECT_API_URL: "http://{{ ansible_host }}:4200/api"
+    DB_HOST: "{{ postgres_ip }}"
+    DB_USER: "test_user"
+    DB_PASSWORD: "testuser25"
+    DB_NAME: "test_db"
