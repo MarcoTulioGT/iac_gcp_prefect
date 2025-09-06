@@ -4,11 +4,11 @@
 - name: Configurar Prefect
   import_tasks: config.yml
 
-#- name: Configurar Prefect Worker  docker
-#  import_tasks: worker.yml
+- name: Configurar Prefect Worker  docker
+  import_tasks: worker.yml
 
-- name: Configurar Prefect Worker local
-  import_tasks: workerLocal.yml
+#- name: Configurar Prefect Worker local
+#  import_tasks: workerLocal.yml
 
 - name: Desplegar deployment Worker Docker
   import_tasks: scripts.yml
