@@ -1,0 +1,16 @@
+prefect-version: 3.4.17
+
+deployments:
+  - name: local-deployment
+    entrypoint: flows/database.py:my_flow
+    work_pool:
+      name: default-local-pool
+      type: process
+    tags: [dev]
+    parameters: {}
+    pull:
+      type: local
+    path: /home/debian/prefect_project
+    schedule: null
+    infrastructure:
+      type: process

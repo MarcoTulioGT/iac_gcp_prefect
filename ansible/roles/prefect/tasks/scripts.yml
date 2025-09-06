@@ -44,7 +44,12 @@
     prefect config set PREFECT_API_URL=http://{{ ansible_host }}:4200/api
     cd /home/debian/prefect_project/flows
     pip3 install -r requirements.txt
-    python3 database.py
+    prefect deploy flows/database.py:my_flow \
+    --name local-deployment \
+    --pool default-local-pool \
+    --tag dev \
+    --path /home/debian/prefect_project/flows \
+    --no-prompt
   args:
     executable: /bin/bash
   register: flow_output
