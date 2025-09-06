@@ -106,7 +106,7 @@
   become: false
   shell: |
     source /home/debian/.venv_prefect/bin/activate
-    prefect worker start --pool default-local-pool --name local-worker
+    nohup prefect worker start --pool default-local-pool --name local-worker > /home/debian/prefect_worker.log 2>&1 &
   args:
     executable: /bin/bash
   environment:
