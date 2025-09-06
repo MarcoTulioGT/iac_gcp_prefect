@@ -119,5 +119,3 @@
   async: 3600
   poll: 0
   register: worker_start
-
-
