@@ -22,20 +22,20 @@
     executable: /bin/bash
   register: prefect_config
 
-- name: Ejecutar flujo Prefect 3 
-  ansible.builtin.shell: |
-    source /home/debian/.venv_prefect/bin/activate
-    prefect config set PREFECT_API_URL=http://{{ ansible_host }}:4200/api
-    cd /home/debian/prefect_project/flows
-    pip3 install -r requirements.txt
-    python3 hello_world.py
-  args:
-    executable: /bin/bash
-  register: flow_output
+#- name: Ejecutar flujo Prefect 3 
+#  ansible.builtin.shell: |
+#    source /home/debian/.venv_prefect/bin/activate
+#    prefect config set PREFECT_API_URL=http://{{ ansible_host }}:4200/api
+#    cd /home/debian/prefect_project/flows
+#    pip3 install -r requirements.txt
+#    python3 hello_world.py
+#  args:
+#    executable: /bin/bash
+#  register: flow_output
 
-- name: Mostrar resultado
-  ansible.builtin.debug:
-    var: flow_output.stdout_lines
+#- name: Mostrar resultado
+#  ansible.builtin.debug:
+#    var: flow_output.stdout_lines
 
 
 - name: Ejecutar flujo Prefect 3 con DB_HOST
