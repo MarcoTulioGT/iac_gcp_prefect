@@ -47,8 +47,7 @@
     prefect deploy flows/database.py:my_flow \
     --name local-deployment \
     --pool default-local-pool \
-    --tag dev \
-    --no-prompt
+    --tag dev 
   args:
     executable: /bin/bash
   register: flow_output
