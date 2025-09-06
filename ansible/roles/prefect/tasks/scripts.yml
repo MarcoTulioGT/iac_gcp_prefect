@@ -48,7 +48,6 @@
     --name local-deployment \
     --pool default-local-pool \
     --tag dev \
-    --path /home/debian/prefect_project/flows \
     --no-prompt
   args:
     executable: /bin/bash
