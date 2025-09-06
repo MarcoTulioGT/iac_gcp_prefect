@@ -4,17 +4,76 @@
     line: "{{ ansible_host }} database_postgres"
     state: present
 
-- name: Crear Docker Work Pool en Prefect
+#- name: Crear Docker Work Pool en Prefect
+#  become: false
+#  environment:
+#    PATH: "/home/debian/.venv_prefect/bin/prefect"
+#    PREFECT_API_URL: "http://{{ ansible_host }}:4200/api"
+#  shell: |
+#    source /home/debian/.venv_prefect/bin/activate
+#    prefect config set PREFECT_API_URL=http://{{ ansible_host }}:4200/api
+#    prefect work-pool create \
+#      --type docker \
+#      default-docker-pool 
+#  args:
+#    executable: /bin/bash
+#  register: create_pool_result
+#  retries: 5
+#  delay: 5
+#  until: create_pool_result is succeeded or "'already exists'" in create_pool_result.stderr
+#  failed_when: create_pool_result.rc != 0 and "'already exists'" not in create_pool_result.stderr
+
+
+#- name: Inspeccionar Work Pool en Prefect
+#  become: false
+#  environment:
+#    PATH: "/home/debian/.venv_prefect/bin:{{ ansible_env.PATH }}"
+#    PREFECT_API_URL: "http://{{ ansible_host }}:4200/api"
+#  shell: |
+#    source /home/debian/.venv_prefect/bin/activate
+#    prefect work-pool inspect default-docker-pool
+#  args:
+#    executable: /bin/bash
+#  register: pool_inspect
+
+#- name: Mostrar información del pool
+#  debug:
+#    var: pool_inspect.stdout_lines
+
+- name: Mostrar postgres_ip con variable
+  debug:
+    msg: "El valor es: {{ postgres_ip }}"
+
+#- name: Iniciar Worker Docker para el Work Pool
+#  become: false
+#  shell: |
+#    source /home/debian/.venv_prefect/bin/activate
+#    prefect worker start --pool default-docker-pool --name docker-worker-1
+#  args:
+#    executable: /bin/bash
+#  environment:
+#    PATH: "/home/debian/.venv_prefect/bin:{{ ansible_env.PATH }}"
+#    PREFECT_API_URL: "http://{{ ansible_host }}:4200/api"
+#    DB_HOST: "{{ postgres_ip }}"
+#    DB_USER: "test_user"
+#    DB_PASSWORD: "testuser25"
+#    DB_NAME: "test_db"
+#  async: 3600
+#  poll: 0
+#  register: worker_start
+
+
+- name: Crear local worker pool
   become: false
   environment:
-    PATH: "/home/debian/.venv_prefect/bin/prefect"
-    PREFECT_API_URL: "http://{{ ansible_host }}:4200/api"
+   PATH: "/home/debian/.venv_prefect/bin/prefect"
+   PREFECT_API_URL: "http://{{ ansible_host }}:4200/api"
   shell: |
     source /home/debian/.venv_prefect/bin/activate
     prefect config set PREFECT_API_URL=http://{{ ansible_host }}:4200/api
     prefect work-pool create \
-      --type docker \
-      default-docker-pool 
+    --type process \
+    default-local-pool
   args:
     executable: /bin/bash
   register: create_pool_result
@@ -23,32 +82,31 @@
   until: create_pool_result is succeeded or "'already exists'" in create_pool_result.stderr
   failed_when: create_pool_result.rc != 0 and "'already exists'" not in create_pool_result.stderr
 
+#- name: Crear Docker Work Pool en Prefect
+#  become: false
+#  environment:
+#    PATH: "/home/debian/.venv_prefect/bin/prefect"
+#    PREFECT_API_URL: "http://{{ ansible_host }}:4200/api"
+#  shell: |
+#    source /home/debian/.venv_prefect/bin/activate
+#    prefect config set PREFECT_API_URL=http://{{ ansible_host }}:4200/api
+#    prefect work-pool create \
+#      --type docker \
+#      default-docker-pool 
+#  args:
+#    executable: /bin/bash
+#  register: create_pool_result
+#  retries: 5
+#  delay: 5
+#  until: create_pool_result is succeeded or "'already exists'" in create_pool_result.stderr
+#  failed_when: create_pool_result.rc != 0 and "'already exists'" not in create_pool_result.stderr
 
-- name: Inspeccionar Work Pool en Prefect
+
+- name: Iniciar worker local
   become: false
-  environment:
-    PATH: "/home/debian/.venv_prefect/bin:{{ ansible_env.PATH }}"
-    PREFECT_API_URL: "http://{{ ansible_host }}:4200/api"
   shell: |
     source /home/debian/.venv_prefect/bin/activate
-    prefect work-pool inspect default-docker-pool
-  args:
-    executable: /bin/bash
-  register: pool_inspect
-
-- name: Mostrar información del pool
-  debug:
-    var: pool_inspect.stdout_lines
-
-- name: Mostrar postgres_ip con variable
-  debug:
-    msg: "El valor es: {{ postgres_ip }}"
-
-- name: Iniciar Worker Docker para el Work Pool
-  become: false
-  shell: |
-    source /home/debian/.venv_prefect/bin/activate
-    prefect worker start --pool default-docker-pool --name docker-worker-1
+    prefect worker start --pool default-local-pool --name local-worker
   args:
     executable: /bin/bash
   environment:
@@ -61,3 +119,5 @@
   async: 3600
   poll: 0
   register: worker_start
+
+
