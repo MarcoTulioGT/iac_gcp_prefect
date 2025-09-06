@@ -44,7 +44,7 @@
     prefect config set PREFECT_API_URL=http://{{ ansible_host }}:4200/api
     cd /home/debian/prefect_project/flows
     pip3 install -r requirements.txt
-    prefect deploy flows/database.py:my_flow \
+    prefect deploy database.py:my_flow \
     --name local-deployment \
     --pool default-local-pool \
     --tag dev 
